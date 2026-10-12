@@ -1,0 +1,12 @@
+node_modules/
+dist/
+
+# Variables de entorno: .env, .env.local, .env.production…
+# Vite expone al navegador todo lo que empiece por VITE_, así que ninguno debe ir al repo.
+.env
+.env.*
+!.env.example
+
+# Archivos temporales que Vite crea al recargar la config
+vite.config.js.timestamp-*
+vite.config.*.timestamp-*

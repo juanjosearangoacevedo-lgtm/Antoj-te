@@ -1,0 +1,107 @@
+# Bitemo en producción: base de datos + backend + frontend/Nginx.
+# Levantar con:  docker compose up -d --build
+# Las variables vienen del archivo .env de esta carpeta (copiar de .env.example).
+
+# Tope a los logs de cada contenedor: Docker los guarda en JSON sin límite y,
+# en un VPS de 50 GB, meses de peticiones acaban llenando el disco. 3 archivos
+# de 10 MB por contenedor dan días de historia de sobra para investigar algo.
+x-logs: &logs
+  logging:
+    driver: json-file
+    options:
+      max-size: "10m"
+      max-file: "3"
+
+# Límites de memoria pensados para el VPS de 2 GB: suman ~1,3 GB y dejan aire
+# al sistema. Si un contenedor se pasa (una fuga, una consulta desbocada), cae
+# ese solo y `restart: unless-stopped` lo levanta, en vez de que el núcleo
+# empiece a matar procesos al azar y tumbe el sitio entero.
+services:
+  db:
+    <<: *logs
+    mem_limit: 768m
+    image: mysql:8
+    restart: unless-stopped
+    # La collation se fija aquí, no en el esquema. Motivo: MYSQL_DATABASE crea
+    # la base ANTES de correr los scripts de inicialización, así que para cuando
+    # bitemo_completo.sql ejecuta su "CREATE DATABASE ... COLLATE
+    # utf8mb4_unicode_ci" la base ya existe y ese IF NOT EXISTS no hace nada.
+    # Sin estas dos banderas la base nacería con la collation por defecto de
+    # MySQL 8 (utf8mb4_0900_ai_ci) y quedaría distinta a la de desarrollo.
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    volumes:
+      - db_data:/var/lib/mysql
+      # Carga del esquema en el primer arranque (solo si db_data está vacío).
+      # init-db.sh define el orden de las migraciones; ver ese archivo.
+      - ./codigo_definitivo/backend/migrations:/migrations:ro
+      - ./init-db.sh:/docker-entrypoint-initdb.d/10-init-db.sh:ro
+    # No publicamos el puerto: MySQL solo es visible dentro de la red de Docker.
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-p${DB_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build: ./codigo_definitivo/backend
+    restart: unless-stopped
+    <<: *logs
+    mem_limit: 384m
+    pids_limit: 200
+    # Ningún proceso del contenedor puede ganar privilegios (setuid y similares).
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_EXPIRES_IN: ${JWT_EXPIRES_IN}
+      BUNNY_STREAM_LIBRARY_ID: ${BUNNY_STREAM_LIBRARY_ID}
+      BUNNY_STREAM_API_KEY: ${BUNNY_STREAM_API_KEY}
+      BUNNY_STREAM_CDN_HOSTNAME: ${BUNNY_STREAM_CDN_HOSTNAME}
+      WOMPI_PUBLIC_KEY: ${WOMPI_PUBLIC_KEY:-}
+      WOMPI_INTEGRITY_SECRET: ${WOMPI_INTEGRITY_SECRET:-}
+      WOMPI_EVENTS_SECRET: ${WOMPI_EVENTS_SECRET:-}
+      RESEND_API_KEY: ${RESEND_API_KEY:-}
+      CORREO_REMITENTE: "${CORREO_REMITENTE:-Bitemo <no-responder@bitemo.co>}"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  web:
+    build: ./codigo_definitivo/frontend
+    restart: unless-stopped
+    <<: *logs
+    mem_limit: 128m
+    pids_limit: 100
+    security_opt:
+      - no-new-privileges:true
+    ports:
+      # 80 sigue abierto y NO es un descuido: sirve el reto de Let's Encrypt y
+      # redirige lo demas a HTTPS. Cerrarlo rompe la renovacion del certificado.
+      - "80:80"
+      - "443:443"
+    volumes:
+      # El certificado lo emite y renueva certbot en el anfitrion; Nginx solo lo
+      # lee. En :ro porque el contenedor no tiene por que poder tocarlo.
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+      # Raiz del reto ACME, compartida con certbot para que las renovaciones no
+      # necesiten parar Nginx.
+      - ./certbot-webroot:/var/www/certbot
+    depends_on:
+      - backend
+
+volumes:
+  db_data:

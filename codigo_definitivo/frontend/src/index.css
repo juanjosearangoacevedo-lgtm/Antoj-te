@@ -1,0 +1,354 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   Design tokens Bitemo — una plataforma, dos superficies.
+
+   Superficie B (comensal): valores por defecto de :root, oscura
+   e inmersiva. La personalización por restaurante (Plan
+   Intermedio+) sobreescribe las variables --c-* vía JS; esa API
+   se conserva intacta.
+
+   Superficie A (plataforma staff): la clase .superficie-plataforma
+   redefine las mismas variables a la paleta OSCURA del panel (login,
+   panel de restaurante/admin y KDS). Es un oscuro "slate" refinado,
+   distinto del negro puro e inmersivo del comensal, para conservar la
+   identidad de "dos superficies". El primario es el naranja de marca.
+   ============================================================ */
+
+:root {
+  color-scheme: dark;
+
+  /* ---- Tokens de sistema ---- */
+  --brand: #0b0b0c;
+  --ok: #4ade80;
+  --ok-soft: rgba(74, 222, 128, 0.12);
+  --danger: #f87171;
+  --danger-soft: rgba(248, 113, 113, 0.14);
+  --accent-soft: rgba(255, 122, 0, 0.16);
+  --sombra-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --sombra-md: 0 8px 24px -8px rgba(0, 0, 0, 0.5);
+  --motion-fast: 150ms;
+  --motion-base: 200ms;
+  --motion-slow: 250ms;
+  --ease-salida: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-resorte: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* ---- API de theming del comensal (se sobreescribe por restaurante) ---- */
+  --c-base: #0a0a0b;
+  --c-surface: #151517;
+  --c-surface2: #1e1e21;
+  --c-line: #2a2a2e;
+  --c-cream: #fafafa;
+  --c-muted: #a1a1aa;
+  --c-primario: #ff7a00;
+  --c-primario-dim: #e56e00;
+  --c-primario-soft: #ffb266;
+  --c-boton: #ff7a00;
+  /* Texto oscuro sobre el naranja: blanco/naranja da 2.6:1 (falla AA); esto da 6.5:1 */
+  --c-boton-texto: #1f1200;
+  --font-display: 'Geist Variable', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-body: 'Geist Variable', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* ---- Personalización avanzada (panel → shared/tema/opciones.js) ----
+     Estos son los valores por defecto de Bitemo. El tema del restaurante
+     los sobreescribe SOLO para las opciones que el administrador eligió;
+     lo que deja sin elegir hereda lo de aquí. */
+  --radio-tarjetas: 1rem; /* esquinas de tarjetas e imágenes */
+  --radio-boton: 12px; /* forma de los botones */
+  --espaciado: 1.25rem; /* aire entre elementos */
+  --alto-categoria: 10rem; /* alto de las tarjetas de categoría */
+  --overlay-categoria: 0.55; /* oscurecimiento sobre la foto de categoría */
+}
+
+/* Tema claro del comensal (modo 'claro' del restaurante) */
+:root[data-modo='claro'] {
+  color-scheme: light;
+  --c-base: #fafafa;
+  --c-surface: #ffffff;
+  --c-surface2: #f4f4f5;
+  --c-line: #eaeaea;
+  --c-cream: #111111;
+  --c-muted: #6b7280;
+  --sombra-sm: 0 1px 2px rgba(17, 17, 17, 0.04);
+  --sombra-md: 0 4px 16px -4px rgba(17, 17, 17, 0.08);
+}
+
+/* ---- Superficie A: plataforma staff (login, panel, KDS) — TEMA OSCURO ---- */
+.superficie-plataforma {
+  color-scheme: dark;
+  --c-base: #0e0e11; /* fondo de la app */
+  --c-surface: #17171b; /* tarjetas, sidebar */
+  --c-surface2: #202027; /* inputs, superficies elevadas */
+  --c-line: #2b2b33; /* bordes */
+  --c-cream: #f5f5f6; /* texto principal */
+  --c-muted: #a1a1aa; /* texto secundario (~7:1 sobre surface) */
+  --c-primario: #ff7a00;
+  --c-primario-dim: #e56e00;
+  --c-primario-soft: #ffb266; /* naranja claro para acentos/íconos sobre oscuro */
+  --c-boton: #ff7a00; /* botón primario = naranja de marca */
+  --c-boton-texto: #1f1200; /* texto oscuro sobre naranja (6.5:1, pasa AA) */
+  --font-display: 'Geist Variable', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-body: 'Geist Variable', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --ok: #4ade80; /* verde éxito legible en oscuro */
+  --ok-soft: rgba(74, 222, 128, 0.14);
+  --danger: #f87171; /* rojo peligro/eliminar legible en oscuro */
+  --danger-soft: rgba(248, 113, 113, 0.16);
+  --accent-soft: rgba(255, 122, 0, 0.16);
+  --sombra-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --sombra-md: 0 12px 32px -12px rgba(0, 0, 0, 0.7);
+  background: var(--c-base);
+  color: var(--c-cream);
+}
+
+/* Tema CLARO del panel staff — opcional, lo elige el usuario (data-staff-tema='claro' en <html>) */
+html[data-staff-tema='claro'] .superficie-plataforma {
+  color-scheme: light;
+  --c-base: #fafafa;
+  --c-surface: #ffffff;
+  --c-surface2: #f4f4f5;
+  --c-line: #eaeaea;
+  --c-cream: #111111;
+  --c-muted: #6b7280;
+  --c-primario-soft: #c2410c;
+  --c-boton: #0b0b0c;
+  --c-boton-texto: #ffffff;
+  --ok: #15803d;
+  --ok-soft: #eaf6ef;
+  --danger: #dc2626;
+  --danger-soft: #fdeeee;
+  --accent-soft: #fff3e8;
+  --sombra-sm: 0 1px 2px rgba(17, 17, 17, 0.04);
+  --sombra-md: 0 4px 16px -4px rgba(17, 17, 17, 0.08);
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  background: var(--c-base);
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--c-cream);
+  overscroll-behavior-y: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* ---------- Nivel de animación elegido en el panel ----------
+   'ninguna' apaga todo el movimiento; 'sutiles' conserva las transiciones
+   (dan sensación de respuesta al toque) pero quita las animaciones de
+   entrada, que son las más llamativas. */
+html[data-animaciones='ninguna'] *,
+html[data-animaciones='ninguna'] *::before,
+html[data-animaciones='ninguna'] *::after {
+  animation: none !important;
+  transition: none !important;
+}
+
+html[data-animaciones='sutiles'] .animate-risein,
+html[data-animaciones='sutiles'] .animate-scalein,
+html[data-animaciones='sutiles'] .animate-ticketIn {
+  animation: none !important;
+}
+
+/* La vista previa del panel replica el mismo comportamiento dentro de su
+   recuadro, sin depender del atributo global de <html>. */
+[data-animaciones='ninguna'] .animate-risein,
+[data-animaciones='ninguna'] .animate-scalein {
+  animation: none !important;
+}
+
+/* Vista previa de categoría: la imagen se acerca lentamente ('animacion') */
+@keyframes acercar {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.08);
+  }
+}
+.previa-animada {
+  animation: acercar 6s ease-in-out infinite alternate;
+}
+
+/* ---------- Feed vertical tipo TikTok ---------- */
+.feed {
+  height: 100dvh;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+.feed-slide {
+  height: 100dvh;
+  width: 100%;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  position: relative;
+}
+
+.feed::-webkit-scrollbar {
+  display: none;
+}
+.feed {
+  scrollbar-width: none;
+}
+
+/* ---------- Comanda / ticket de cocina ---------- */
+.ticket-edge {
+  background-image: radial-gradient(circle at 8px 0, transparent 7px, var(--c-base) 7.5px);
+  background-size: 16px 16px;
+  background-position: -8px 0;
+  background-repeat: repeat-x;
+  height: 10px;
+  width: 100%;
+}
+
+.ticket-dashed {
+  border-top: 1.5px dashed var(--c-line);
+}
+
+/* ---------- Skeleton de carga ---------- */
+.skeleton {
+  border-radius: 8px;
+  background: linear-gradient(90deg, var(--c-surface2) 25%, var(--c-line) 50%, var(--c-surface2) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s ease infinite;
+}
+@keyframes shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+/* ---------- Focus visible accesible ---------- */
+:focus-visible {
+  outline: 2px solid var(--c-primario);
+  outline-offset: 2px;
+}
+
+/* ---------- Scrollbar oculta utilitaria ---------- */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  scrollbar-width: none;
+}
+
+/* ---------- Contenido escrito por el build ----------
+   El HTML que el build deja dentro de #root para los buscadores (ver
+   seo/contenido-html.js) es semántico y no lleva ni una clase de Tailwind:
+   tiene que poder leerlo un rastreador sin CSS.
+
+   Pero también lo VE el visitante durante los milisegundos —o segundos, en una
+   conexión lenta— que tarda React en montar. Sin estas reglas, ese momento es
+   texto negro sobre fondo negro con estilos por defecto del navegador. Son
+   pocas reglas y solo tipografía: es contenido real y visible, así que no hay
+   nada oculto que un buscador pueda tomarse a mal. */
+.contenido-previo {
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 4rem;
+  color: var(--c-muted);
+  line-height: 1.65;
+
+  /* Las tipografías de marca se declaran aquí y no se heredan de
+     .superficie-plataforma.landing-page: esa regla necesita las DOS clases, y
+     ponerle landing-page a este envoltorio arrastraría además su posicionamiento
+     y sus brillos decorativos, que no pintan nada en un texto de paso. */
+  --font-display: 'Poppins', 'Geist Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-body: 'Nunito', 'Geist Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: var(--font-body);
+}
+.contenido-previo h1,
+.contenido-previo h2,
+.contenido-previo h3 {
+  color: var(--c-cream);
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+.contenido-previo h1 {
+  font-size: clamp(2rem, 5vw, 2.6rem);
+  margin-bottom: 1rem;
+}
+.contenido-previo h2 {
+  font-size: 1.6rem;
+  margin: 2.5rem 0 0.75rem;
+}
+.contenido-previo h3 {
+  font-size: 1.05rem;
+  margin: 1.5rem 0 0.35rem;
+}
+.contenido-previo p,
+.contenido-previo li,
+.contenido-previo dd {
+  margin-bottom: 0.75rem;
+}
+.contenido-previo dt {
+  color: var(--c-cream);
+  font-weight: 600;
+  margin-top: 1.25rem;
+}
+.contenido-previo ul,
+.contenido-previo ol {
+  padding-left: 1.25rem;
+  margin-bottom: 1rem;
+}
+.contenido-previo ul {
+  list-style: disc;
+}
+.contenido-previo ol {
+  list-style: decimal;
+}
+.contenido-previo a {
+  color: var(--c-primario-soft);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.contenido-previo nav ul,
+.contenido-previo nav ol {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+  font-size: 0.85rem;
+}
+.contenido-previo table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  display: block;
+  overflow-x: auto;
+}
+.contenido-previo th,
+.contenido-previo td {
+  border-bottom: 1px solid var(--c-line);
+  padding: 0.6rem 0.75rem 0.6rem 0;
+  text-align: left;
+  vertical-align: top;
+}
+.contenido-previo th {
+  color: var(--c-cream);
+}

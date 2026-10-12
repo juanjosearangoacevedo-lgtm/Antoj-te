@@ -1,0 +1,9 @@
+node_modules
+npm-debug.log
+.env
+.env.*
+*.local
+
+# Volcados de la base. .gitignore ya los excluye, pero este archivo es
+# independiente: sin esta línea el backup entero viaja dentro de la imagen.
+backups

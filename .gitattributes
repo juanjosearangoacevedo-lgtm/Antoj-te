@@ -1,0 +1,38 @@
+# Finales de línea.
+#
+# El repo se edita en Windows (core.autocrlf=true) pero se ejecuta en Linux:
+# el VPS y los contenedores Docker. Un archivo con CRLF que cruza esa frontera
+# falla de formas poco obvias:
+#
+#   ./deploy.sh   ->  bad interpreter: /usr/bin/env bash^M
+#   cron backup   ->  lo mismo, en silencio, a las 3am
+#
+# Por eso todo lo que ejecuta Linux se fuerza a LF, sin importar la máquina
+# donde se haya editado.
+
+# Por defecto: que git normalice el texto y decida por extensión.
+* text=auto
+
+# Se ejecutan en Linux -> LF obligatorio.
+*.sh            text eol=lf
+*.sql           text eol=lf
+*.yml           text eol=lf
+*.yaml          text eol=lf
+*.conf          text eol=lf
+Dockerfile      text eol=lf
+.dockerignore   text eol=lf
+.env.example    text eol=lf
+
+# Se ejecutan en Windows -> CRLF.
+*.bat           text eol=crlf
+
+# Binarios: que git no los toque.
+*.png           binary
+*.jpg           binary
+*.jpeg          binary
+*.gif           binary
+*.webp          binary
+*.ico           binary
+*.woff          binary
+*.woff2         binary
+*.mp4           binary

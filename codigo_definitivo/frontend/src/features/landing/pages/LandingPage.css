@@ -1,0 +1,231 @@
+/* Poppins y Nunito ya NO se piden a Google Fonts. Estaban en un @import de este
+   archivo, que es la peor forma de cargar una fuente: el navegador tiene que
+   bajar este CSS, descubrir dentro el @import, pedirle a Google OTRO CSS y solo
+   entonces empezar con los archivos de fuente. Tres viajes encadenados, a otro
+   dominio, antes de poder pintar una sola letra del titular — que es justo el
+   elemento que mide el LCP.
+
+   Ahora se autoalojan (@fontsource, importadas en main.jsx junto a Geist):
+   salen del mismo servidor, en la misma conexión y ya con los assets del build.
+   De paso, el sitio deja de mandarle a Google la IP de cada visitante, y la CSP
+   puede cerrar los dos dominios de fuentes. */
+
+/* ============================================================
+   Landing pública — superficie de marca Bitemo.
+
+   Dos cosas que este archivo resuelve y que Tailwind no puede:
+
+   1) FUENTES. La landing comparte elemento con .superficie-plataforma, que
+      también declara --font-display/--font-body. Con una sola clase empatan en
+      especificidad y gana la que el bundler escriba de última (main.jsx importa
+      App antes que index.css, así que ganaba Geist). Por eso el selector lleva
+      las dos clases: sube a 0-2-0 y el resultado deja de depender del orden.
+
+   2) COLORES TRANSLÚCIDOS. Los tokens del tema son var(), y Tailwind 3 NO
+      genera nada para bg-amber/10, bg-base/70, border-line/70 ni from-amber/15
+      sobre colores var() (ya lo advierte tailwind.config.js). Las mezclas de
+      marca se resuelven aquí con color-mix() y se exponen como clases.
+   ============================================================ */
+
+.superficie-plataforma.landing-page {
+  --font-display: 'Poppins', 'Geist Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-body: 'Nunito', 'Geist Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* Paleta del manual de marca */
+  --marca-naranja: #ff7a00;
+  --marca-naranja-claro: #ffab4f;
+  --marca-rojo: #ff3b30;
+  --marca-crema: #fff4e6;
+  --marca-verde: #22c55e;
+
+  /* Mezclas derivadas (lo que bg-amber/10 debería haber hecho) */
+  --tinte-suave: color-mix(in srgb, var(--marca-naranja) 10%, transparent);
+  --tinte-medio: color-mix(in srgb, var(--marca-naranja) 16%, transparent);
+  --borde-marca: color-mix(in srgb, var(--marca-naranja) 24%, transparent);
+  --borde-marca-fuerte: color-mix(in srgb, var(--marca-naranja) 46%, transparent);
+  --velo-superficie: color-mix(in srgb, var(--c-surface) 72%, transparent);
+  --velo-base: color-mix(in srgb, var(--c-base) 82%, transparent);
+
+  font-family: var(--font-body);
+}
+
+/* El que scrollea es <html>, no el contenedor: ahí va el scroll suave, y solo
+   mientras la landing esté montada. */
+@media (prefers-reduced-motion: no-preference) {
+  html:has(.landing-page) {
+    scroll-behavior: smooth;
+  }
+}
+
+.landing-page {
+  position: relative;
+  isolation: isolate;
+  overflow-x: clip; /* los brillos decorativos no deben generar scroll lateral */
+}
+
+/* Brillos de fondo. En ::before para que no compitan con el bg-base de Tailwind
+   y para poder fijarlos detrás de todo el contenido. */
+.landing-page::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: min(1200px, 130vh);
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    radial-gradient(60rem 40rem at 12% -8%, color-mix(in srgb, var(--marca-naranja) 20%, transparent), transparent 62%),
+    radial-gradient(48rem 34rem at 92% 6%, color-mix(in srgb, var(--marca-rojo) 12%, transparent), transparent 60%);
+}
+
+/* Ancla bajo el header pegajoso: sin esto los enlaces de sección dejan el
+   título tapado por la barra. */
+.landing-page section[id] {
+  scroll-margin-top: 6.5rem;
+}
+
+/* ---------- Barra superior ---------- */
+.landing-page .nav-landing {
+  background: var(--velo-base);
+  border-bottom: 1px solid var(--c-line);
+}
+
+/* ---------- Piezas de marca reutilizables ---------- */
+.landing-page .chip-marca {
+  background: var(--tinte-suave);
+  border: 1px solid var(--borde-marca);
+  color: var(--c-primario-soft);
+}
+
+.landing-page .icono-marca {
+  background: var(--tinte-medio);
+  border: 1px solid var(--borde-marca);
+  color: var(--c-primario-soft);
+}
+
+.landing-page .tarjeta-landing {
+  background: var(--velo-superficie);
+  border: 1px solid var(--c-line);
+  transition:
+    transform var(--motion-base) var(--ease-salida),
+    border-color var(--motion-base) var(--ease-salida),
+    box-shadow var(--motion-base) var(--ease-salida);
+}
+
+.landing-page .tarjeta-landing:hover {
+  transform: translateY(-3px);
+  border-color: var(--borde-marca-fuerte);
+  box-shadow: var(--sombra-md);
+}
+
+.landing-page .tarjeta-destacada {
+  background:
+    radial-gradient(40rem 20rem at 50% -20%, var(--tinte-medio), transparent 70%),
+    var(--c-surface);
+  border: 1px solid var(--borde-marca);
+}
+
+.landing-page .franja-cta {
+  background: linear-gradient(
+    100deg,
+    color-mix(in srgb, var(--marca-naranja) 9%, transparent),
+    transparent 45%,
+    color-mix(in srgb, var(--marca-rojo) 8%, transparent)
+  );
+}
+
+/* Línea que une los tres pasos en escritorio.
+   isolation crea el contexto de apilamiento: sin él, el z-index negativo
+   mandaría la línea detrás del fondo de la sección y no se vería. */
+.landing-page .linea-pasos {
+  isolation: isolate;
+}
+
+.landing-page .linea-pasos::before {
+  content: '';
+  position: absolute;
+  top: 2.9rem; /* centro de los íconos: 1.5rem de padding + medio ícono */
+  left: 12%;
+  right: 12%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--borde-marca-fuerte), transparent);
+  z-index: -1;
+}
+
+@media (max-width: 767px) {
+  .landing-page .linea-pasos::before {
+    display: none;
+  }
+}
+
+/* ---------- Maqueta del teléfono del hero ---------- */
+.landing-page .telefono-marco {
+  border-radius: 2.75rem;
+  padding: 0.6rem;
+  background: linear-gradient(160deg, #3a3a42, #121216 55%, #26262d);
+  box-shadow:
+    0 40px 80px -30px rgba(0, 0, 0, 0.85),
+    0 0 0 1px rgba(255, 255, 255, 0.06) inset;
+}
+
+.landing-page .telefono-pantalla {
+  position: relative;
+  border-radius: 2.2rem;
+  overflow: hidden;
+  background: #08080a;
+  aspect-ratio: 9 / 19;
+}
+
+.landing-page .telefono-notch {
+  position: absolute;
+  top: 0.55rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 32%;
+  height: 1.35rem;
+  border-radius: 999px;
+  background: #08080a;
+  z-index: 3;
+}
+
+/* Placeholder del video: un "plato" abstracto, no una foto de stock. */
+.landing-page .plato-simulado {
+  background:
+    radial-gradient(9rem 7rem at 50% 42%, #ffcf8a, transparent 62%),
+    radial-gradient(14rem 11rem at 62% 78%, color-mix(in srgb, var(--marca-rojo) 72%, transparent), transparent 64%),
+    linear-gradient(165deg, #8a4a12, #35190a 72%);
+}
+
+/* Campo trampa del formulario de contacto. Se saca de la vista con posición y
+   no con display:none, porque un bot que lee estilos descarta lo oculto: así
+   sigue "existiendo" para él y lo rellena, que es lo que queremos detectar. */
+.landing-page .campo-trampa {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* ---------- Mascota ---------- */
+.landing-page .mascota {
+  filter: drop-shadow(0 24px 34px rgba(0, 0, 0, 0.5));
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* El ciclo abre y cierra en la posición de reposo a propósito: index.css corta
+   las animaciones a una iteración cuando el sistema pide menos movimiento, y
+   con 'alternate' la mascota se quedaría 12px desplazada para siempre. */
+.landing-page .mascota-flotante {
+  animation: mascota-flotar 5.5s ease-in-out infinite;
+}
+
+@keyframes mascota-flotar {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}

@@ -1,0 +1,26 @@
+# Dependencias
+node_modules/
+
+# Builds
+dist/
+build/
+
+# Variables de entorno (nunca al repo: contienen credenciales de MySQL y Bunny)
+.env
+.env.local
+*.env
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
+
+# Sistema operativo / editores
+Thumbs.db
+.DS_Store
+.vscode/
+.idea/
+
+# Copias de seguridad locales
+*.backup/
+backups/

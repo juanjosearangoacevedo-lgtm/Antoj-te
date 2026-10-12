@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Sin maximum-scale: impedir el zoom es un fallo de accesibilidad (una
+         carta con letra pequeña y un comensal presbicia es el caso exacto en el
+         que hace falta), lo marca cualquier auditoría y iOS lo ignora desde
+         hace años para el gesto de pellizcar. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#0A0A0B" />
+
+    <!-- ============================================================
+         SEO. Va aquí y no inyectado por React a propósito: la ruta / es
+         la landing y Nginx sirve este mismo index.html, así que Google y
+         los previsualizadores de WhatsApp/Facebook —que NO ejecutan
+         JavaScript— leen los datos correctos sin esperar al bundle.
+         __SITIO__ lo sustituye el plugin seoEstatico de vite.config.js.
+         ============================================================ -->
+    <meta
+      name="description"
+      content="Convierte la carta de tu restaurante en un menú digital con QR: tus comensales ven cada plato en video y piden desde la mesa, sin descargar ninguna app."
+    />
+    <link rel="canonical" href="__SITIO__/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Bitemo" />
+    <meta property="og:locale" content="es_CO" />
+    <meta property="og:url" content="__SITIO__/" />
+    <meta property="og:title" content="Menú digital con QR y video para restaurantes | Bitemo" />
+    <meta
+      property="og:description"
+      content="Tus comensales escanean el QR, ven cada plato en video y piden desde la mesa. Sin app y sin registro."
+    />
+    <meta property="og:image" content="__SITIO__/marca/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Isotipo de Bitemo en línea: mismo trazado que BitemoLogo.jsx, sin archivo extra. -->
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><defs><linearGradient id="g" x1="6" y1="3" x2="42" y2="45" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="%23ffab4f"/><stop offset=".5" stop-color="%23ff7a00"/><stop offset="1" stop-color="%23ff5a00"/></linearGradient><mask id="m"><rect width="48" height="48" fill="%23fff"/><circle cx="43.5" cy="7" r="8.6"/></mask></defs><rect x="3" y="3" width="42" height="42" rx="14" fill="url(%23g)" mask="url(%23m)"/><path d="M20.6 17.4 32.4 24 20.6 30.6Z" fill="%23fff" stroke="%23fff" stroke-width="3.4" stroke-linejoin="round"/></svg>'
+    />
+
+    <!-- Ya no hay preconnect a Google Fonts: las tipografías de marca
+         (Poppins/Nunito) se autoalojan desde main.jsx, así que la landing no
+         habla con ningún dominio ajeno. Las fuentes de TEMA de cada restaurante
+         sí siguen viniendo de Google, pero solo dentro de su menú y las inyecta
+         shared/tema/aplicarTema.js cuando hacen falta; abrir aquí esa conexión
+         para todo el mundo era pagarla también en la portada, que no la usa. -->
+
+    <title>Menú digital con QR y video para restaurantes | Bitemo</title>
+
+    <!-- Datos estructurados (Organization + SoftwareApplication + FAQPage).
+         Los genera vite.config.js a partir de contenido/preguntas.js. -->
+    <script type="application/ld+json">
+      __JSONLD__
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
