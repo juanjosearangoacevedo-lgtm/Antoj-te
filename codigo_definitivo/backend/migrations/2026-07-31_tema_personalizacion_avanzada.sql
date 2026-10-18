@@ -8,7 +8,7 @@
 -- Convención importante: TODAS las columnas nuevas admiten NULL y su valor por
 -- defecto es NULL, no un valor concreto. NULL o cadena vacía significa
 -- "usa el valor por defecto de la plataforma". Así el restaurante que no
--- personaliza nada hereda el diseño de Bitemo, y una opción que se limpia
+-- personaliza nada hereda el diseño de Antojate, y una opción que se limpia
 -- vuelve al default en vez de quedarse congelada en un valor viejo.
 -- ============================================================================
 
@@ -39,7 +39,7 @@ ALTER TABLE temas_restaurante
 
 -- Los temas ya existentes se sembraron con la paleta anterior al rediseño de
 -- marca (#e7a93c dorado, #0f0d0b carbón, #f5f1e8 crema), lo que pisaba los
--- colores de Bitemo en el menú del comensal. Se limpian esos cuatro campos
+-- colores de Antojate en el menú del comensal. Se limpian esos cuatro campos
 -- para que vuelvan a heredar el default; el restaurante que quiera su propia
 -- paleta la vuelve a elegir desde el panel.
 UPDATE temas_restaurante

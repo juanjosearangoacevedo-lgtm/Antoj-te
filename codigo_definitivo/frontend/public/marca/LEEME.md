@@ -1,6 +1,6 @@
 # Recursos de marca
 
-El logotipo y el isotipo son **SVG en código** (`src/features/landing/components/marca/BitemoLogo.jsx`):
+El logotipo y el isotipo son **SVG en código** (`src/shared/components/marca/LogoAntojate.jsx`):
 no hay que exportar nada para ellos.
 
 ## `og.png` — la vista previa al compartir
@@ -21,29 +21,18 @@ información importante en los bordes, que algunas plataformas recortan.
 
 ## La mascota
 
-La mascota sí es un render 3D del manual de marca y vive aquí como PNG.
+Desde octubre de 2026 la mascota es una tostada con cara, minimalista y sin
+fondo: contorno verde cilantro `#1F8A5B`, cuerpo blanco y cara en tinto
+`#2B1B12`. Es **SVG en código**
+(`src/shared/components/marca/MascotaAntojate.jsx`): no hay PNG que
+exportar para la web.
 
-## Archivos que espera la landing
+Expresiones: `feliz`, `sorprendido`, `curioso`, `increible`, `recomendando` y
+`celebrando` (la lista vive en `EXPRESIONES`).
 
-| Archivo                     | Expresión del manual | Dónde se usa                |
-| --------------------------- | -------------------- | --------------------------- |
-| `mascota-recomendando.png`  | Recomendando         | Hero, junto al teléfono     |
-| `mascota-curioso.png`       | Curioso              | Cabecera de "Cómo funciona" |
-| `mascota-celebrando.png`    | Celebrando           | Tarjeta del CTA final       |
+`mascota.svg` es la misma figura en un archivo suelto, con fondo transparente,
+para redes y piezas de diseño. Instagram y TikTok piden PNG o JPG: expórtala a
+1080 × 1080.
 
-El manual trae además `feliz`, `sorprendido` e `increible`; se pueden agregar con el
-mismo patrón `mascota-<expresion>.png` (la lista vive en `EXPRESIONES`,
-en `MascotaBitemo.jsx`).
-
-## Cómo exportarlos
-
-- **PNG con fondo transparente**, recortado al contorno de la mascota (sin margen sobrante:
-  el margen se posiciona desde CSS).
-- Lado mayor de **600–800 px**. Se muestran entre 80 px y 176 px, así que eso cubre
-  pantallas 2x sin inflar la descarga.
-- Pásalos por un compresor (TinyPNG, `oxipng`, `squoosh`) y apunta a **< 120 KB** cada uno.
-
-## Si falta un archivo
-
-No se rompe nada: `MascotaBitemo` detecta el error de carga y dibuja una versión plana
-en SVG de la mascota. Al dejar el PNG en esta carpeta, la landing lo toma sola.
+Las mascotas anteriores (el explorador con gorro de aviador, sus renders 3D
+`mascota-*.png` y la tostada naranja con mordida) quedaron retiradas.

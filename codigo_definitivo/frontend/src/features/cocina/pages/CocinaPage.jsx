@@ -247,7 +247,7 @@ export default function CocinaPage() {
           <h1 className="text-xl font-bold text-cream mb-2">Membresía vencida</h1>
           <p className="text-sm text-muted mb-6">
             La pantalla de cocina está pausada hasta que el administrador del restaurante renueve la
-            membresía de Bitemo.
+            membresía de Antojate.
           </p>
           <Btn variante="secundario" onClick={logout}>
             <LogOut size={15} /> Cerrar sesión

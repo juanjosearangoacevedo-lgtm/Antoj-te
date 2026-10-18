@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Despliega o actualiza Bitemo en el VPS.
+# Despliega o actualiza Antojate en el VPS.
 # Uso:  ./deploy.sh
 set -euo pipefail
 

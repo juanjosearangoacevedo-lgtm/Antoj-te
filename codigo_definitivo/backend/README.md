@@ -198,6 +198,85 @@ POST /api/public/<token-qr>/carrito/checkout
 GET /api/public/pedidos/<sesion_token>
 ```
 
+## 7 bis. API de la app móvil (`/api/app/v1`)
+
+La app móvil del comensal (`codigo_definitivo/movil/`) habla por su propio
+prefijo, **versionado**: una app publicada no se actualiza a la fuerza, así que
+el día que un contrato tenga que romperse nacerá `/v2` y `/v1` seguirá
+respondiendo. `/api/public` no se toca.
+
+**Identidad separada del staff.** El comensal vive en la tabla `comensales` (no
+en `usuarios`), y su token se firma con una clave derivada de `JWT_SECRET`: un
+token de comensal no verifica en `authenticate` (staff) ni al revés. El access
+token dura 15 minutos y se renueva con un refresh token que rota en cada uso (en
+la base solo su hash). Detalle en `utils/jwt.js` y
+`services/sesionesComensal.service.js`.
+
+Cabeceras que manda la app en cada petición: `X-Dispositivo` (UUID del teléfono,
+no es una credencial), `X-Plataforma` (`ios` | `android`) y, con sesión,
+`Authorization: Bearer <access token>`.
+
+| Acción | Ruta | Sesión |
+|---|---|---|
+| Versión mínima admitida de la app | `GET /api/app/v1/config` | — |
+| Crear cuenta (abre sesión) | `POST /api/app/v1/auth/registro` | — |
+| Entrar | `POST /api/app/v1/auth/login` | — |
+| Renovar el access token | `POST /api/app/v1/auth/refresh` `{ refresh_token }` | — |
+| Cerrar sesión en este teléfono | `POST /api/app/v1/auth/logout` `{ refresh_token }` | — |
+| Pedir código para restablecer la clave | `POST /api/app/v1/auth/recuperar` | — |
+| Restablecer con el código (abre sesión) | `POST /api/app/v1/auth/restablecer` | — |
+| Ver / editar la cuenta | `GET` · `PUT /api/app/v1/cuenta` | comensal |
+| Cambiar la clave (cierra las demás sesiones) | `PUT /api/app/v1/cuenta/password` | comensal |
+| Pedir / confirmar código de verificación del correo | `POST /api/app/v1/cuenta/verificacion` · `/verificacion/confirmar` | comensal |
+| Borrar la cuenta (pide la clave) | `DELETE /api/app/v1/cuenta` `{ password }` | comensal |
+
+Los códigos por correo son de 6 dígitos, vencen en 15 minutos, admiten 5
+intentos y se pueden pedir 3 por hora y cuenta. Sin `RESEND_API_KEY` no se envían:
+en desarrollo se escriben en la consola del backend.
+
+### El feed y su capa social (fase 2)
+
+Nada de esto exige cuenta salvo comentar, reportar y bloquear. Sin sesión, los
+"me gusta" y los guardados son del teléfono (`X-Dispositivo`); al entrar o
+registrarse pasan a la cuenta.
+
+| Acción | Ruta | Sesión |
+|---|---|---|
+| Página del feed (antojos opcionales, cursor opaco) | `GET /api/app/v1/feed?antojo=…&cursor=…&limite=12` | opcional |
+| Cuántos platos coinciden con unos antojos | `GET /api/app/v1/feed/conteo?antojo=…` | opcional |
+| Opciones de la hoja ANTOJATE y restaurantes | `GET /api/app/v1/feed/opciones` | opcional |
+| Un plato con la forma del feed | `GET /api/app/v1/platos/:id` | opcional |
+| Me gusta / quitarlo (idempotente) | `POST` · `DELETE /api/app/v1/platos/:id/me-gusta` | opcional |
+| Comentarios de un plato | `GET /api/app/v1/platos/:id/comentarios?cursor=…` | opcional |
+| Comentar | `POST /api/app/v1/platos/:id/comentarios` `{ texto }` | comensal |
+| Borrar un comentario propio | `DELETE /api/app/v1/comentarios/:id` | comensal |
+| Reportar un comentario | `POST /api/app/v1/reportes` `{ comentario_id, motivo }` | comensal |
+| Bloquear a quien escribió un comentario | `POST /api/app/v1/bloqueos` `{ comentario_id }` | comensal |
+| Guardados: ver, guardar, quitar | `GET` · `POST /api/app/v1/guardados` · `DELETE /guardados/:id` | opcional |
+| Señales del feed, por lotes de hasta 50 | `POST /api/app/v1/eventos` `{ eventos }` | opcional |
+
+Los antojos son los mismos ids que arma la app (`categoria:postres`, `chef`,
+`sabor:picante`, `precio:25000`, `restaurante:<slug>`): dentro de un tipo basta
+una opción, entre tipos hay que cumplirlas todas, y un id desconocido no filtra.
+El orden es lo más reciente primero, sin dos platos seguidos del mismo
+restaurante mientras haya otro; el cursor fija el momento en que empezó la
+sesión de feed, así que paginar no repite platos. Detalle en
+`services/feed.service.js` y `services/feed/orden.js`.
+
+Quien tiene sesión no ve los comentarios de las personas que bloqueó ni los que
+reportó, y el `total` de `GET …/comentarios` cuenta lo que esa persona ve, para
+que cuadre con la lista. El número de comentarios del feed es otro: el de todo
+el mundo.
+
+En el panel, `GET /api/comentarios` (`?reportados=1`, `?estado=oculto`),
+`PATCH /api/comentarios/:id` `{ estado }` y `DELETE /api/comentarios/:id` dejan
+moderar lo que se comenta sobre los platos del restaurante. Un comentario con
+tres reportes de personas distintas se oculta solo hasta que alguien lo revise.
+
+Para desarrollar con más de un restaurante: `node scripts/seedDesarrolloApp.js`
+crea dos restaurantes ficticios (`prueba-app-*`) que reutilizan los videos del
+demo, y `--borrar` los quita. No corre con `NODE_ENV=production`.
+
 ## 8. Notas de diseño
 
 - **Multi-tenant por `restaurante_id`**: casi todos los controladores de staff

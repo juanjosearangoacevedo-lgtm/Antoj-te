@@ -11,7 +11,7 @@ export function FeatureLock({ titulo, descripcion }) {
       <h2 className="text-lg font-bold tracking-tight text-cream mb-2">{titulo}</h2>
       <p className="text-muted text-sm max-w-md mx-auto mb-6">{descripcion}</p>
       <p className="text-xs text-muted">
-        Contacta al equipo de Bitemo para mejorar tu plan y desbloquear esta funcionalidad.
+        Contacta al equipo de Antojate para mejorar tu plan y desbloquear esta funcionalidad.
       </p>
     </Card>
   );

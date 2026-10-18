@@ -1,4 +1,4 @@
-# Backend Node/Express de Bitemo
+# Backend Node/Express de Antojate
 FROM node:22-alpine
 
 WORKDIR /app

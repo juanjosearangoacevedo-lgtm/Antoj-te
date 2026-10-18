@@ -4,7 +4,7 @@ import { useEffect } from 'react';
  * Cambia el <title> mientras la vista está montada y lo restaura al salir.
  *
  * Hace falta porque el <title> de index.html está redactado para posicionar la
- * landing en Google ("Menú digital con QR y video para restaurantes | Bitemo").
+ * landing en Google ("Menú digital con QR y video para restaurantes | Antojate").
  * Como es un SPA, ese título lo hereda CUALQUIER ruta si nadie lo cambia: el
  * comensal que escanea un QR vería un texto de venta en la pestaña en lugar de
  * la marca de su restaurante, que es justo lo contrario de lo que promete la

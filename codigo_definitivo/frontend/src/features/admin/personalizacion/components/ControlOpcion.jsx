@@ -49,7 +49,7 @@ export default function ControlOpcion({ opcion, valor, onCambiar }) {
           maxLength={opcion.max}
           placeholder={opcion.marcador}
           // Vacío se guarda como null, no como '': es la convención del tema
-          // (null = usa el valor por defecto de Bitemo).
+          // (null = usa el valor por defecto de Antojate).
           onChange={(e) => onCambiar(e.target.value.trim() === '' ? null : e.target.value)}
           className="w-full bg-surface border border-line rounded-xl px-3 py-2 text-sm text-cream placeholder:text-muted outline-none focus:border-amber"
         />

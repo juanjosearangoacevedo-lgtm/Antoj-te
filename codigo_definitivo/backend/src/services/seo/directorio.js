@@ -104,7 +104,7 @@ const ficha = (r) => {
 };
 
 // ItemList del listado. Es lo que permite que un asistente responda "qué
-// restaurantes usan Bitemo" con la lista real en vez de deducirla del texto.
+// restaurantes usan Antojate" con la lista real en vez de deducirla del texto.
 const schemaListado = (lista, rutaPagina, nombre) => ({
   '@type': 'CollectionPage',
   '@id': `${url(rutaPagina)}#pagina`,
@@ -130,15 +130,15 @@ async function indice(plantilla) {
   const ciudades = ciudadesConPagina(lista);
   const indexable = lista.length >= MIN_PARA_INDEXAR;
 
-  const titulo = 'Restaurantes con menú digital en Bitemo';
+  const titulo = 'Restaurantes con menú digital en Antojate';
   const descripcion = lista.length
     ? recortar(
-        `Cartas digitales con video de ${lista.length} restaurante${lista.length === 1 ? '' : 's'} en Bitemo: platos, precios y video de cada plato.`
+        `Cartas digitales con video de ${lista.length} restaurante${lista.length === 1 ? '' : 's'} en Antojate: platos, precios y video de cada plato.`
       )
-    : 'Directorio de los restaurantes que publican su carta digital con video en Bitemo.';
+    : 'Directorio de los restaurantes que publican su carta digital con video en Antojate.';
 
   const camino = [
-    { nombre: 'Bitemo', ruta: '/' },
+    { nombre: 'Antojate', ruta: '/' },
     { nombre: 'Restaurantes', ruta: '/restaurantes' },
   ];
 
@@ -171,7 +171,7 @@ async function indice(plantilla) {
     ])}`;
 
   return ensamblar(plantilla, {
-    titulo: `${titulo} | Bitemo`,
+    titulo: `${titulo} | Antojate`,
     descripcion,
     canonical: url('/restaurantes'),
     // Mientras el directorio tenga menos de tres fichas es una página flaca, y
@@ -200,7 +200,7 @@ async function porCiudad(plantilla, ciudadSlug) {
 
   const titulo = `Restaurantes con menú digital en ${ciudad.nombre}`;
   const camino = [
-    { nombre: 'Bitemo', ruta: '/' },
+    { nombre: 'Antojate', ruta: '/' },
     { nombre: 'Restaurantes', ruta: '/restaurantes' },
     { nombre: ciudad.nombre, ruta: `/restaurantes/${ciudad.slug}` },
   ];
@@ -210,7 +210,7 @@ async function porCiudad(plantilla, ciudadSlug) {
     <main>
       <h1>${esc(titulo)}</h1>
       <p>${esc(
-        `${ciudad.items.length} restaurantes de ${ciudad.nombre} publican su carta digital en Bitemo, con los platos, los precios y el video de cada plato.`
+        `${ciudad.items.length} restaurantes de ${ciudad.nombre} publican su carta digital en Antojate, con los platos, los precios y el video de cada plato.`
       )}</p>
       <ul>${ciudad.items.map(ficha).join('')}</ul>
       <p><a href="${url('/restaurantes')}">Ver todos los restaurantes</a></p>
@@ -218,7 +218,7 @@ async function porCiudad(plantilla, ciudadSlug) {
     ${pie([{ ruta: '/menu-digital-con-video', texto: 'Qué es un menú digital con video' }])}`;
 
   return ensamblar(plantilla, {
-    titulo: `${titulo} | Bitemo`,
+    titulo: `${titulo} | Antojate`,
     descripcion: recortar(
       `Cartas digitales con video de ${ciudad.items.length} restaurantes en ${ciudad.nombre}: ${ciudad.items
         .slice(0, 4)

@@ -10,7 +10,7 @@
 // No hay que tocar el panel ni el comensal.
 //
 // REGLA CENTRAL: `null`, `undefined` y `''` significan "usa el valor por
-// defecto de Bitemo". Nunca se escribe una variable CSS con un valor vacío.
+// defecto de Antojate". Nunca se escribe una variable CSS con un valor vacío.
 // Es lo que evita que un tema a medio llenar pise el diseño de la plataforma.
 // ============================================================================
 
@@ -142,7 +142,7 @@ export const OPCIONES = [
     ayuda: 'La fuente de los nombres de platos y categorías.',
     variable: '--font-display',
     valores: [
-      { valor: '', nombre: 'Geist (por defecto)' },
+      { valor: '', nombre: 'Baloo 2 (por defecto)' },
       { valor: '"Fraunces", serif', nombre: 'Fraunces — serif con carácter' },
       { valor: '"Playfair Display", serif', nombre: 'Playfair Display — clásica' },
       { valor: '"Manrope", sans-serif', nombre: 'Manrope — moderna' },
@@ -157,7 +157,7 @@ export const OPCIONES = [
     ayuda: 'La fuente de descripciones y textos largos.',
     variable: '--font-body',
     valores: [
-      { valor: '', nombre: 'Geist (por defecto)' },
+      { valor: '', nombre: 'Nunito Sans (por defecto)' },
       { valor: '"Manrope", sans-serif', nombre: 'Manrope' },
       { valor: '"Inter", sans-serif', nombre: 'Inter' },
       { valor: '"Fraunces", serif', nombre: 'Fraunces' },

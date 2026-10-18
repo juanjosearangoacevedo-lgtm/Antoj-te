@@ -1,25 +1,13 @@
-/* Poppins y Nunito ya NO se piden a Google Fonts. Estaban en un @import de este
-   archivo, que es la peor forma de cargar una fuente: el navegador tiene que
-   bajar este CSS, descubrir dentro el @import, pedirle a Google OTRO CSS y solo
-   entonces empezar con los archivos de fuente. Tres viajes encadenados, a otro
-   dominio, antes de poder pintar una sola letra del titular — que es justo el
-   elemento que mide el LCP.
-
-   Ahora se autoalojan (@fontsource, importadas en main.jsx junto a Geist):
-   salen del mismo servidor, en la misma conexión y ya con los assets del build.
-   De paso, el sitio deja de mandarle a Google la IP de cada visitante, y la CSP
-   puede cerrar los dos dominios de fuentes. */
-
 /* ============================================================
-   Landing pública — superficie de marca Bitemo.
+   Landing pública — superficie de marca Antojate.
 
    Dos cosas que este archivo resuelve y que Tailwind no puede:
 
-   1) FUENTES. La landing comparte elemento con .superficie-plataforma, que
-      también declara --font-display/--font-body. Con una sola clase empatan en
-      especificidad y gana la que el bundler escriba de última (main.jsx importa
-      App antes que index.css, así que ganaba Geist). Por eso el selector lleva
-      las dos clases: sube a 0-2-0 y el resultado deja de depender del orden.
+   1) PALETA. La marca Antojate (octubre de 2026) usa Baloo 2 y Nunito Sans,
+      que ya heredan de index.css, y cinco colores: verde cilantro, blanco,
+      arepa, mazorca y tinto. Aquí viven los que la landing usa por nombre.
+      El selector lleva las dos clases para subir a 0-2-0 y no depender del
+      orden en que el bundler escriba los CSS.
 
    2) COLORES TRANSLÚCIDOS. Los tokens del tema son var(), y Tailwind 3 NO
       genera nada para bg-amber/10, bg-base/70, border-line/70 ni from-amber/15
@@ -28,21 +16,21 @@
    ============================================================ */
 
 .superficie-plataforma.landing-page {
-  --font-display: 'Poppins', 'Geist Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-body: 'Nunito', 'Geist Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  /* Paleta de Antojate */
+  --marca-verde: #1f8a5b;
+  --marca-mazorca: #f6b931;
+  --marca-tinto: #2b1b12;
+  --marca-arepa: #fff6e6;
 
-  /* Paleta del manual de marca */
-  --marca-naranja: #ff7a00;
-  --marca-naranja-claro: #ffab4f;
-  --marca-rojo: #ff3b30;
-  --marca-crema: #fff4e6;
-  --marca-verde: #22c55e;
+  /* Color de las mezclas y del segundo brillo. */
+  --marca-acento: var(--marca-verde);
+  --marca-acento-2: var(--marca-mazorca);
 
   /* Mezclas derivadas (lo que bg-amber/10 debería haber hecho) */
-  --tinte-suave: color-mix(in srgb, var(--marca-naranja) 10%, transparent);
-  --tinte-medio: color-mix(in srgb, var(--marca-naranja) 16%, transparent);
-  --borde-marca: color-mix(in srgb, var(--marca-naranja) 24%, transparent);
-  --borde-marca-fuerte: color-mix(in srgb, var(--marca-naranja) 46%, transparent);
+  --tinte-suave: color-mix(in srgb, var(--marca-acento) 10%, transparent);
+  --tinte-medio: color-mix(in srgb, var(--marca-acento) 16%, transparent);
+  --borde-marca: color-mix(in srgb, var(--marca-acento) 24%, transparent);
+  --borde-marca-fuerte: color-mix(in srgb, var(--marca-acento) 46%, transparent);
   --velo-superficie: color-mix(in srgb, var(--c-surface) 72%, transparent);
   --velo-base: color-mix(in srgb, var(--c-base) 82%, transparent);
 
@@ -73,8 +61,8 @@
   z-index: -1;
   pointer-events: none;
   background-image:
-    radial-gradient(60rem 40rem at 12% -8%, color-mix(in srgb, var(--marca-naranja) 20%, transparent), transparent 62%),
-    radial-gradient(48rem 34rem at 92% 6%, color-mix(in srgb, var(--marca-rojo) 12%, transparent), transparent 60%);
+    radial-gradient(60rem 40rem at 12% -8%, color-mix(in srgb, var(--marca-acento) 20%, transparent), transparent 62%),
+    radial-gradient(48rem 34rem at 92% 6%, color-mix(in srgb, var(--marca-acento-2) 10%, transparent), transparent 60%);
 }
 
 /* Ancla bajo el header pegajoso: sin esto los enlaces de sección dejan el
@@ -127,9 +115,9 @@
 .landing-page .franja-cta {
   background: linear-gradient(
     100deg,
-    color-mix(in srgb, var(--marca-naranja) 9%, transparent),
+    color-mix(in srgb, var(--marca-acento) 9%, transparent),
     transparent 45%,
-    color-mix(in srgb, var(--marca-rojo) 8%, transparent)
+    color-mix(in srgb, var(--marca-acento-2) 8%, transparent)
   );
 }
 
@@ -161,7 +149,7 @@
 .landing-page .telefono-marco {
   border-radius: 2.75rem;
   padding: 0.6rem;
-  background: linear-gradient(160deg, #3a3a42, #121216 55%, #26262d);
+  background: linear-gradient(160deg, #4a3a2e, var(--marca-tinto) 55%, #2e231b);
   box-shadow:
     0 40px 80px -30px rgba(0, 0, 0, 0.85),
     0 0 0 1px rgba(255, 255, 255, 0.06) inset;
@@ -171,7 +159,7 @@
   position: relative;
   border-radius: 2.2rem;
   overflow: hidden;
-  background: #08080a;
+  background: #0b0806;
   aspect-ratio: 9 / 19;
 }
 
@@ -183,15 +171,15 @@
   width: 32%;
   height: 1.35rem;
   border-radius: 999px;
-  background: #08080a;
+  background: #0b0806;
   z-index: 3;
 }
 
 /* Placeholder del video: un "plato" abstracto, no una foto de stock. */
 .landing-page .plato-simulado {
   background:
-    radial-gradient(9rem 7rem at 50% 42%, #ffcf8a, transparent 62%),
-    radial-gradient(14rem 11rem at 62% 78%, color-mix(in srgb, var(--marca-rojo) 72%, transparent), transparent 64%),
+    radial-gradient(9rem 7rem at 50% 42%, var(--marca-mazorca), transparent 62%),
+    radial-gradient(14rem 11rem at 62% 78%, color-mix(in srgb, var(--marca-verde) 72%, transparent), transparent 64%),
     linear-gradient(165deg, #8a4a12, #35190a 72%);
 }
 
@@ -208,7 +196,7 @@
 
 /* ---------- Mascota ---------- */
 .landing-page .mascota {
-  filter: drop-shadow(0 24px 34px rgba(0, 0, 0, 0.5));
+  filter: drop-shadow(0 18px 28px rgba(23, 17, 12, 0.55));
   user-select: none;
   -webkit-user-drag: none;
 }
@@ -228,4 +216,186 @@
   50% {
     transform: translateY(-12px);
   }
+}
+
+/* ============================================================
+   Propuesta 3 · "Parche de Barrio" (prueba, octubre de 2026)
+
+   Verde cilantro y blanco dominan; el tinto queda solo para el texto. Se
+   activa con la clase tema-barrio en LandingPage.jsx y se quita borrándola.
+
+   El selector lleva tres clases (0-3-0) para ganarle también al tema claro
+   del panel (html[data-staff-tema='claro'] .superficie-plataforma, 0-2-1).
+
+   Contraste: el blanco sobre #1F8A5B da 4.3:1, justo por debajo de AA para
+   texto normal. Por eso los botones y la tarjeta verde con párrafos usan
+   #1B7D52 (5.1:1), que a la vista es el mismo verde. El #1F8A5B puro va en
+   titulares grandes, íconos, bordes y fondos sin texto pequeño.
+   ============================================================ */
+.superficie-plataforma.landing-page.tema-barrio {
+  color-scheme: light;
+
+  --barrio-cilantro: #1f8a5b;
+  --barrio-cilantro-boton: #1b7d52;
+  --barrio-cilantro-texto: #17704a; /* verde para texto pequeño sobre blanco: 5.7:1 */
+  --barrio-mazorca: #f6b931;
+  --barrio-arepa: #fff6e6;
+  --barrio-tinto: #2b1b12;
+
+  --c-base: #ffffff; /* el blanco domina; el arepa alterna las secciones */
+  --c-surface: var(--barrio-arepa);
+  --c-surface2: #fdf0d9;
+  --c-line: #ecdfc6;
+  --c-cream: var(--barrio-tinto); /* texto principal */
+  --c-muted: #6b5545; /* 6.5:1 sobre arepa, 7:1 sobre blanco */
+  --c-primario: var(--barrio-cilantro);
+  --c-primario-dim: var(--barrio-cilantro-boton);
+  --c-primario-soft: var(--barrio-cilantro-texto);
+  --c-boton: var(--barrio-cilantro-boton);
+  --c-boton-texto: #ffffff;
+  --accent-soft: #e3f3ea;
+  --ok: #15803d;
+  --ok-soft: #e6f4ea;
+  --danger: #c62828;
+  --danger-soft: #fdecea;
+  --sombra-sm: 0 1px 2px rgba(43, 27, 18, 0.06);
+  --sombra-md: 0 10px 28px -12px rgba(43, 27, 18, 0.18);
+
+  --font-display: 'Baloo 2', 'Nunito Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-body: 'Nunito Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  --marca-acento: var(--barrio-cilantro);
+  --marca-acento-2: var(--barrio-mazorca);
+
+  background: var(--c-base);
+  color: var(--c-cream);
+}
+
+/* Baloo dibuja grueso de por sí: el 700 de Tailwind se pinta con su 800 y
+   el espaciado negativo de los titulares le apretaría las letras redondas. */
+.tema-barrio .font-display {
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+/* ---- Piezas tipo sticker: borde de tinta y sombra dura, sin difuminar ---- */
+.tema-barrio .chip-marca {
+  background: #ffffff;
+  border: 2px solid var(--barrio-tinto);
+  color: var(--barrio-tinto);
+  box-shadow: 3px 3px 0 var(--barrio-cilantro);
+  transform: rotate(-1.5deg);
+}
+
+.tema-barrio .icono-marca {
+  background: var(--barrio-cilantro);
+  border: 2px solid var(--barrio-tinto);
+  color: #ffffff;
+  box-shadow: 3px 3px 0 var(--barrio-mazorca);
+}
+
+.tema-barrio .tarjeta-landing {
+  background: #ffffff;
+  border: 2px solid var(--c-line);
+}
+
+.tema-barrio .tarjeta-landing:hover {
+  border-color: var(--barrio-cilantro);
+  box-shadow: 5px 5px 0 var(--barrio-cilantro);
+}
+
+/* Botón principal: verde con borde y sombra de sticker. */
+.tema-barrio .bg-boton {
+  border: 2px solid var(--barrio-tinto);
+  box-shadow: 3px 3px 0 var(--barrio-tinto);
+  transition: transform var(--motion-fast) var(--ease-salida), box-shadow var(--motion-fast) var(--ease-salida);
+}
+
+.tema-barrio .bg-boton:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 var(--barrio-tinto);
+}
+
+.tema-barrio .bg-boton:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--barrio-tinto);
+}
+
+/* "Qué incluye" es la franja verde de la página: de borde a borde aunque la
+   sección mida 6xl (la sombra extendida pinta el resto y clip-path la corta
+   arriba y abajo). Lleva #1B7D52 porque tiene párrafos en blanco. */
+.tema-barrio #beneficios {
+  --c-cream: #ffffff;
+  --c-muted: #ffffff;
+  background: var(--barrio-cilantro-boton);
+  box-shadow: 0 0 0 100vmax var(--barrio-cilantro-boton);
+  clip-path: inset(0 -100vmax);
+}
+
+.tema-barrio #beneficios .tarjeta-landing {
+  --c-cream: var(--barrio-tinto);
+  --c-muted: #6b5545;
+  border-color: var(--barrio-tinto);
+  box-shadow: 4px 4px 0 var(--barrio-mazorca);
+}
+
+.tema-barrio #beneficios .tarjeta-landing:hover {
+  box-shadow: 7px 7px 0 var(--barrio-mazorca);
+}
+
+/* Barra superior: blanca y translúcida. */
+.tema-barrio .nav-landing {
+  background: color-mix(in srgb, #ffffff 86%, transparent);
+  border-bottom: 2px solid var(--c-line);
+}
+
+/* Tarjeta destacada del formulario: blanca con borde verde. */
+.tema-barrio .tarjeta-destacada {
+  background: #ffffff;
+  border: 2px solid var(--barrio-cilantro);
+  box-shadow: 6px 6px 0 var(--barrio-cilantro);
+}
+
+/* Franja final: un bloque verde entero, el momento de color de la página.
+   Dentro, los tokens se invierten para que el texto y los botones se lean. */
+.tema-barrio .franja-cta {
+  background: var(--barrio-arepa);
+}
+
+.tema-barrio .franja-cta .tarjeta-destacada {
+  --c-cream: #ffffff;
+  --c-muted: #ffffff;
+  --c-surface: transparent;
+  --c-line: rgba(255, 255, 255, 0.7);
+  --c-boton: #ffffff;
+  --c-boton-texto: #145c3c;
+  background: var(--barrio-cilantro-boton);
+  border: 2px solid var(--barrio-tinto);
+  box-shadow: 8px 8px 0 var(--barrio-mazorca);
+}
+
+.tema-barrio .franja-cta .bg-boton {
+  box-shadow: 3px 3px 0 var(--barrio-tinto);
+}
+
+/* El teléfono del hero sigue oscuro (es la app), pero con marco verde. */
+.tema-barrio .telefono-marco {
+  background: linear-gradient(160deg, #2e9a6a, #145c3c 60%, #1f8a5b);
+  box-shadow:
+    0 30px 60px -28px rgba(20, 92, 60, 0.55),
+    8px 8px 0 var(--barrio-mazorca);
+}
+
+.tema-barrio .mascota {
+  filter: drop-shadow(0 10px 14px rgba(43, 27, 18, 0.12));
+}
+
+
+/* El plato simulado del teléfono va en tonos de mazorca y café: cálido sin
+   salirse de la paleta. */
+.tema-barrio .plato-simulado {
+  background:
+    radial-gradient(9rem 7rem at 50% 42%, var(--barrio-mazorca), transparent 62%),
+    radial-gradient(14rem 11rem at 62% 78%, rgba(31, 138, 91, 0.45), transparent 64%),
+    linear-gradient(165deg, #6b4a1c, #2b1b12 72%);
 }

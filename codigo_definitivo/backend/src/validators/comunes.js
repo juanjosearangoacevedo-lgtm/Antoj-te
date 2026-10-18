@@ -34,11 +34,16 @@ const passwordNueva = z
   .max(200, 'La contraseña no puede superar 200 caracteres');
 
 // La sesión anónima del comensal: la genera el navegador (crypto.randomUUID).
+//
+// Sin ':' porque en `favoritos` un dueño 'c:<id>' es una CUENTA de la app (ver
+// models/social.model.js): sin esta regla, el menú web podría marcar o quitar
+// "me gusta" en nombre de cualquier cuenta mandando ese token.
 const sesionToken = z
   .string({ error: 'sesion_token es obligatorio' })
   .trim()
   .min(1, 'sesion_token es obligatorio')
-  .max(100);
+  .max(100)
+  .refine((v) => !v.includes(':'), 'sesion_token no es válido');
 
 // Regla compartida por carrito, favoritos y analítica: la línea apunta a un
 // plato O a un combo, nunca a los dos ni a ninguno.

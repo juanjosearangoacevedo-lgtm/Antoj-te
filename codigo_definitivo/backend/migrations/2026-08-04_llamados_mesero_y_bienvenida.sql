@@ -20,7 +20,7 @@
 --
 -- POR QUÉ ESTA TABLA SE CREA CON SQL DINÁMICO
 -- Las claves ajenas exigen que la columna que apunta tenga EXACTAMENTE el mismo
--- tipo que la apuntada, y ahí las bases de Bitemo no coinciden entre sí:
+-- tipo que la apuntada, y ahí las bases de Antojate no coinciden entre sí:
 -- `bitemo_completo.sql` declara `mesas.id` y `usuarios.id` como INT, mientras
 -- que la base de desarrollo —que nació del volcado de la demo— los tiene en
 -- INT UNSIGNED (el mismo desfase que ya obligó a corregir bitemo_faltantes.sql).
@@ -92,7 +92,7 @@ DEALLOCATE PREPARE crear_llamados;
 -- 2. La personalización de la bienvenida
 --
 -- Misma convención que el resto de `temas_restaurante`: NULL significa "usa el
--- valor por defecto de Bitemo", nunca un valor concreto. Por eso las tres
+-- valor por defecto de Antojate", nunca un valor concreto. Por eso las tres
 -- admiten NULL y ninguna trae DEFAULT.
 -- ---------------------------------------------------------------------------
 ALTER TABLE temas_restaurante

@@ -1,5 +1,5 @@
 -- ============================================================================
---  BITEMO — Base de datos completa (esquema + datos iniciales)
+--  ANTOJATE — Base de datos completa (esquema + datos iniciales)
 --  Idempotente: puede ejecutarse varias veces sin duplicar nada.
 --    - Crea la base y TODAS las tablas si no existen
 --    - Siembra roles, planes con feature flags, superadmin y restaurante demo
@@ -127,12 +127,19 @@ CREATE TABLE IF NOT EXISTS platos (
 ) ENGINE=InnoDB;
 
 -- ---- Inventario (ingredientes y recetas) ----
+-- Los nombres de estas columnas NO son cosméticos: `ingredientes.model.js`
+-- escribe y lee `costo_unitario` y `stock_actual`. Este archivo declaraba
+-- `stock` (y nada de costo), así que una base creada desde cero respondía 500 a
+-- POST /api/ingredientes mientras la de desarrollo —que nació de otro volcado y
+-- sí tenía los nombres buenos— funcionaba. Se corrigió el 2026-09-15; las bases
+-- que ya existían se igualan con 2026-09-15_saneo_esquema.sql.
 CREATE TABLE IF NOT EXISTS ingredientes (
   id INT AUTO_INCREMENT PRIMARY KEY,
   restaurante_id INT NOT NULL,
-  nombre VARCHAR(120) NOT NULL,
+  nombre VARCHAR(150) NOT NULL,
+  costo_unitario DECIMAL(10,4) NOT NULL DEFAULT 0,
   es_alergeno TINYINT(1) NOT NULL DEFAULT 0,
-  stock DECIMAL(12,2) NOT NULL DEFAULT 0,
+  stock_actual DECIMAL(12,3) NOT NULL DEFAULT 0,
   unidad VARCHAR(20) NULL,
   CONSTRAINT fk_ing_rest FOREIGN KEY (restaurante_id) REFERENCES restaurantes (id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
@@ -411,7 +418,7 @@ INSERT IGNORE INTO recomendaciones_ia_productos (plato_id_origen, producto_id_re
   (100, 103, 0.7);   -- Carpaccio → Ribeye
 
 -- Tema visual del restaurante demo
--- Sin colores ni tipografias: en NULL el menu hereda el diseno de Bitemo.
+-- Sin colores ni tipografias: en NULL el menu hereda el diseno de Antojate.
 -- Fijarlos aqui pisaba el design system en el menu del comensal.
 INSERT IGNORE INTO temas_restaurante
   (id, restaurante_id, colores_categorias, modo)
@@ -421,7 +428,7 @@ VALUES
    'oscuro');
 
 -- ============================================================
-SELECT 'Base de datos Bitemo lista.' AS resultado,
+SELECT 'Base de datos Antojate lista.' AS resultado,
        (SELECT COUNT(*) FROM planes) AS planes,
        (SELECT COUNT(*) FROM restaurantes) AS restaurantes,
        (SELECT COUNT(*) FROM platos) AS platos;

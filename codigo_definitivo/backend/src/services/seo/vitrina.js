@@ -1,6 +1,6 @@
 // La vitrina pública de un restaurante: /r/:slug.
 //
-// Bitemo es una SPA: Nginx sirve el mismo index.html para toda URL y el
+// Antojate es una SPA: Nginx sirve el mismo index.html para toda URL y el
 // contenido lo pinta React DESPUÉS, en el navegador. Para un visitante da igual;
 // para quien no ejecuta JavaScript, la página está en blanco. Y no ejecutan
 // JavaScript:
@@ -81,7 +81,7 @@ function metadatos({ restaurante, platos }) {
               .slice(0, 6)
               .map((p) => p.nombre)
               .join(', ')}. Mira cada plato en video antes de pedir.`
-          : `Carta de ${nombre}${ciudad ? ` en ${ciudad}` : ''} en Bitemo.`
+          : `Carta de ${nombre}${ciudad ? ` en ${ciudad}` : ''} en Antojate.`
       );
 
   return { titulo, descripcion, url, imagen: restaurante.logo_url || `${SITIO}/marca/og.png` };
@@ -194,7 +194,7 @@ function datosEstructurados({ restaurante, platos }, meta) {
   };
 
   const camino = [
-    { nombre: 'Bitemo', ruta: '/' },
+    { nombre: 'Antojate', ruta: '/' },
     { nombre: 'Restaurantes', ruta: '/restaurantes' },
     { nombre: restaurante.restaurante_nombre, ruta: `/r/${restaurante.slug}` },
   ];
@@ -205,8 +205,8 @@ function datosEstructurados({ restaurante, platos }, meta) {
       restaurantSchema,
       schemaMigas(camino),
       // La plataforma que publica la carta, por referencia. Es lo que permite a
-      // un buscador entender que estas cartas pertenecen todas a Bitemo.
-      { '@type': 'Organization', '@id': ID_ORGANIZACION, name: 'Bitemo', url: `${SITIO}/` },
+      // un buscador entender que estas cartas pertenecen todas a Antojate.
+      { '@type': 'Organization', '@id': ID_ORGANIZACION, name: 'Antojate', url: `${SITIO}/` },
     ],
   };
 }
@@ -240,7 +240,7 @@ function contenidoRastreable({ restaurante, platos }, meta) {
     .join('');
 
   const camino = [
-    { nombre: 'Bitemo', ruta: '/' },
+    { nombre: 'Antojate', ruta: '/' },
     { nombre: 'Restaurantes', ruta: '/restaurantes' },
     { nombre: restaurante.restaurante_nombre, ruta: `/r/${restaurante.slug}` },
   ];
@@ -250,9 +250,9 @@ function contenidoRastreable({ restaurante, platos }, meta) {
       <h1>${nombre}${restaurante.ciudad ? ` en ${esc(restaurante.ciudad)}` : ''}</h1>
       <p>${esc(meta.descripcion)}</p>
       ${secciones || '<p>Este restaurante todavía no ha publicado su carta.</p>'}
-      <p><a href="${esc(url('/restaurantes'))}">Más restaurantes en Bitemo</a> · <a href="${esc(
+      <p><a href="${esc(url('/restaurantes'))}">Más restaurantes en Antojate</a> · <a href="${esc(
         url('/')
-      )}">Bitemo — menú digital con QR y video para restaurantes</a></p>
+      )}">Antojate — menú digital con QR y video para restaurantes</a></p>
     </article>`;
 }
 

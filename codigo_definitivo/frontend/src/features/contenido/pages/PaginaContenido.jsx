@@ -84,7 +84,7 @@ export default function PaginaContenido({ slug }) {
 
         <aside className="tarjeta-destacada rounded-[1.75rem] p-7 mt-12 shadow-card">
           <h2 className="font-display text-xl font-bold text-cream text-balance">
-            Monta el menú digital de tu restaurante con Bitemo
+            Monta el menú digital de tu restaurante con Antojate
           </h2>
           <p className="text-sm text-muted mt-3 leading-relaxed text-pretty">
             Carta en video, un QR por mesa y las comandas directo a cocina. Te lo mostramos funcionando con tus propios

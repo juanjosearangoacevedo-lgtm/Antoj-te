@@ -27,7 +27,7 @@ export default function AdminLayout() {
   const { pathname } = useLocation();
 
   // Va antes de los returns: los hooks no pueden quedar detrás de un condicional.
-  useTituloPagina('Panel · Bitemo');
+  useTituloPagina('Panel · Antojate');
 
   if (cargando) return <PantallaCargando />;
   if (!usuario) return <Navigate to="/login" replace />;

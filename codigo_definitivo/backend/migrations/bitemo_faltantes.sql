@@ -1,5 +1,5 @@
 -- ============================================================================
---  BITEMO — Completar base de datos existente
+--  ANTOJATE — Completar base de datos existente
 --  Para bases que YA tienen las tablas originales de la demo:
 --  (carritos, categorias, combos, mesas, planes, platos, restaurantes,
 --   roles, sucursales, usuarios, ingredientes, modificadores...)
@@ -312,7 +312,7 @@ INSERT IGNORE INTO recomendaciones_ia_productos (plato_id_origen, producto_id_re
   (100, 103, 0.7);
 
 -- Tema visual del restaurante demo
--- Sin colores ni tipografias: en NULL el menu hereda el diseno de Bitemo.
+-- Sin colores ni tipografias: en NULL el menu hereda el diseno de Antojate.
 INSERT IGNORE INTO temas_restaurante
   (restaurante_id, colores_categorias, modo)
 SELECT id,

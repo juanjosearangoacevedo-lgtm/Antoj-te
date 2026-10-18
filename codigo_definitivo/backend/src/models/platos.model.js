@@ -96,10 +96,12 @@ const opcionesDeGrupo = async (grupoId, db = pool) => {
   return rows;
 };
 
+// `publicado_en` (cuándo entra al feed de la app) lo pone la base: al crear, si
+// el video ya está listo; al actualizar, la primera vez que llega a 'listo'.
 const crear = async (datos, db = pool) => {
   const [result] = await db.query(
-    `INSERT INTO platos (categoria_id, nombre, descripcion, precio, video_url, video_guid, video_thumbnail_url, video_status, imagen_url, orden, nivel_picante, recomendado_chef, recomendado_dias, recomendado_hora_inicio, recomendado_hora_fin)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    `INSERT INTO platos (categoria_id, nombre, descripcion, precio, video_url, video_guid, video_thumbnail_url, video_status, imagen_url, orden, nivel_picante, recomendado_chef, recomendado_dias, recomendado_hora_inicio, recomendado_hora_fin, en_feed, duracion_segundos, publicado_en)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, IF(? = 'listo', NOW(), NULL))`,
     [
       datos.categoria_id,
       datos.nombre,
@@ -116,6 +118,10 @@ const crear = async (datos, db = pool) => {
       datos.recomendado_dias || null,
       datos.recomendado_hora_inicio || null,
       datos.recomendado_hora_fin || null,
+      // Sin indicarlo, el plato sale en la app: es lo que esperan los restaurantes.
+      datos.en_feed === undefined ? 1 : datos.en_feed ? 1 : 0,
+      datos.duracion_segundos ?? null,
+      datos.video_status || 'listo',
     ]
   );
   return result.insertId;
@@ -134,6 +140,11 @@ const programacionChef = async (id, restauranteId = null, db = pool) => {
 
 // `dias`, `horaInicio` y `horaFin` llegan ya resueltos por el service: aquí no se
 // usa COALESCE con ellos, justamente para que se puedan limpiar (poner NULL).
+//
+// `publicado_en` va DESPUÉS de `video_status` a propósito: MySQL evalúa las
+// asignaciones de un UPDATE de izquierda a derecha, así que ahí `video_status`
+// ya es el valor nuevo. Se fija una sola vez, la primera que el video llega a
+// 'listo'; editar el precio después no lo vuelve "nuevo" en el feed.
 const actualizar = async (id, datos, { dias, horaInicio, horaFin }, restauranteId = null, db = pool) => {
   const t = acotar(restauranteId);
   const [result] = await db.query(
@@ -143,7 +154,10 @@ const actualizar = async (id, datos, { dias, horaInicio, horaFin }, restauranteI
      video_status = COALESCE(?, video_status), imagen_url = COALESCE(?, imagen_url), orden = COALESCE(?, orden),
      nivel_picante = COALESCE(?, nivel_picante), recomendado_chef = COALESCE(?, recomendado_chef),
      recomendado_dias = ?, recomendado_hora_inicio = ?, recomendado_hora_fin = ?,
-     activo = COALESCE(?, activo) WHERE id = ?${t.sql}`,
+     activo = COALESCE(?, activo), en_feed = COALESCE(?, en_feed),
+     duracion_segundos = COALESCE(?, duracion_segundos),
+     publicado_en = IF(publicado_en IS NULL AND video_status = 'listo', NOW(), publicado_en)
+     WHERE id = ?${t.sql}`,
     [
       datos.categoria_id,
       datos.nombre,
@@ -161,6 +175,8 @@ const actualizar = async (id, datos, { dias, horaInicio, horaFin }, restauranteI
       horaInicio,
       horaFin,
       datos.activo === undefined ? null : datos.activo ? 1 : 0,
+      datos.en_feed === undefined ? null : datos.en_feed ? 1 : 0,
+      datos.duracion_segundos ?? null,
       id,
       ...t.params,
     ]
@@ -248,6 +264,7 @@ const guardarColeccionBunny = async (restauranteId, collectionId, db = pool) => 
 };
 
 module.exports = {
+  RECOMENDADO_VIGENTE,
   listar,
   buscarPorId,
   buscarPublicoPorId,

@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 /* ============================================================
-   Design tokens Bitemo — una plataforma, dos superficies.
+   Design tokens Antojate — una plataforma, dos superficies.
 
    Superficie B (comensal): valores por defecto de :root, oscura
    e inmersiva. La personalización por restaurante (Plan
@@ -21,12 +21,12 @@
   color-scheme: dark;
 
   /* ---- Tokens de sistema ---- */
-  --brand: #0b0b0c;
+  --brand: #145c3c;
   --ok: #4ade80;
   --ok-soft: rgba(74, 222, 128, 0.12);
   --danger: #f87171;
   --danger-soft: rgba(248, 113, 113, 0.14);
-  --accent-soft: rgba(255, 122, 0, 0.16);
+  --accent-soft: rgba(58, 168, 118, 0.16);
   --sombra-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
   --sombra-md: 0 8px 24px -8px rgba(0, 0, 0, 0.5);
   --motion-fast: 150ms;
@@ -36,23 +36,25 @@
   --ease-resorte: cubic-bezier(0.16, 1, 0.3, 1);
 
   /* ---- API de theming del comensal (se sobreescribe por restaurante) ---- */
-  --c-base: #0a0a0b;
-  --c-surface: #151517;
-  --c-surface2: #1e1e21;
-  --c-line: #2a2a2e;
-  --c-cream: #fafafa;
-  --c-muted: #a1a1aa;
-  --c-primario: #ff7a00;
-  --c-primario-dim: #e56e00;
-  --c-primario-soft: #ffb266;
-  --c-boton: #ff7a00;
-  /* Texto oscuro sobre el naranja: blanco/naranja da 2.6:1 (falla AA); esto da 6.5:1 */
-  --c-boton-texto: #1f1200;
-  --font-display: 'Geist Variable', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-body: 'Geist Variable', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  /* Paleta de Antojate: el menú sigue oscuro para que los videos resalten,
+     con el verde cilantro de la marca como acento. */
+  --c-base: #0e1210;
+  --c-surface: #161c19;
+  --c-surface2: #1f2722;
+  --c-line: #2c3631;
+  --c-cream: #fffaf2;
+  --c-muted: #a9b5ad; /* 8:1 sobre surface */
+  --c-primario: #3aa876; /* verde claro: el cilantro #1F8A5B se apaga sobre negro */
+  --c-primario-dim: #1f8a5b;
+  --c-primario-soft: #7fd1a8;
+  --c-boton: #1b7d52;
+  /* Blanco sobre #1B7D52 da 5.1:1 (pasa AA); sobre el #1F8A5B puro, 4.3 no. */
+  --c-boton-texto: #ffffff;
+  --font-display: 'Baloo 2', 'Nunito Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-body: 'Nunito Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
   /* ---- Personalización avanzada (panel → shared/tema/opciones.js) ----
-     Estos son los valores por defecto de Bitemo. El tema del restaurante
+     Estos son los valores por defecto de Antojate. El tema del restaurante
      los sobreescribe SOLO para las opciones que el administrador eligió;
      lo que deja sin elegir hereda lo de aquí. */
   --radio-tarjetas: 1rem; /* esquinas de tarjetas e imágenes */
@@ -65,37 +67,40 @@
 /* Tema claro del comensal (modo 'claro' del restaurante) */
 :root[data-modo='claro'] {
   color-scheme: light;
-  --c-base: #fafafa;
-  --c-surface: #ffffff;
-  --c-surface2: #f4f4f5;
-  --c-line: #eaeaea;
-  --c-cream: #111111;
-  --c-muted: #6b7280;
-  --sombra-sm: 0 1px 2px rgba(17, 17, 17, 0.04);
-  --sombra-md: 0 4px 16px -4px rgba(17, 17, 17, 0.08);
+  --c-base: #ffffff;
+  --c-surface: #fff6e6;
+  --c-surface2: #fdf0d9;
+  --c-line: #ecdfc6;
+  --c-cream: #2b1b12;
+  --c-muted: #6b5545;
+  --c-primario: #1f8a5b;
+  --c-primario-dim: #1b7d52;
+  --c-primario-soft: #17704a;
+  --sombra-sm: 0 1px 2px rgba(43, 27, 18, 0.05);
+  --sombra-md: 0 4px 16px -4px rgba(43, 27, 18, 0.1);
 }
 
 /* ---- Superficie A: plataforma staff (login, panel, KDS) — TEMA OSCURO ---- */
 .superficie-plataforma {
   color-scheme: dark;
-  --c-base: #0e0e11; /* fondo de la app */
-  --c-surface: #17171b; /* tarjetas, sidebar */
-  --c-surface2: #202027; /* inputs, superficies elevadas */
-  --c-line: #2b2b33; /* bordes */
-  --c-cream: #f5f5f6; /* texto principal */
-  --c-muted: #a1a1aa; /* texto secundario (~7:1 sobre surface) */
-  --c-primario: #ff7a00;
-  --c-primario-dim: #e56e00;
-  --c-primario-soft: #ffb266; /* naranja claro para acentos/íconos sobre oscuro */
-  --c-boton: #ff7a00; /* botón primario = naranja de marca */
-  --c-boton-texto: #1f1200; /* texto oscuro sobre naranja (6.5:1, pasa AA) */
-  --font-display: 'Geist Variable', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-body: 'Geist Variable', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --c-base: #0e1210; /* fondo de la app */
+  --c-surface: #161c19; /* tarjetas, sidebar */
+  --c-surface2: #1f2722; /* inputs, superficies elevadas */
+  --c-line: #2c3631; /* bordes */
+  --c-cream: #fffaf2; /* texto principal */
+  --c-muted: #a9b5ad; /* texto secundario (8:1 sobre surface) */
+  --c-primario: #3aa876; /* verde de marca aclarado para fondo oscuro */
+  --c-primario-dim: #1f8a5b;
+  --c-primario-soft: #7fd1a8; /* acentos e íconos sobre oscuro */
+  --c-boton: #1b7d52; /* botón primario = verde de marca */
+  --c-boton-texto: #ffffff; /* 5.1:1, pasa AA */
+  --font-display: 'Baloo 2', 'Nunito Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-body: 'Nunito Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --ok: #4ade80; /* verde éxito legible en oscuro */
   --ok-soft: rgba(74, 222, 128, 0.14);
   --danger: #f87171; /* rojo peligro/eliminar legible en oscuro */
   --danger-soft: rgba(248, 113, 113, 0.16);
-  --accent-soft: rgba(255, 122, 0, 0.16);
+  --accent-soft: rgba(58, 168, 118, 0.16);
   --sombra-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
   --sombra-md: 0 12px 32px -12px rgba(0, 0, 0, 0.7);
   background: var(--c-base);
@@ -105,22 +110,24 @@
 /* Tema CLARO del panel staff — opcional, lo elige el usuario (data-staff-tema='claro' en <html>) */
 html[data-staff-tema='claro'] .superficie-plataforma {
   color-scheme: light;
-  --c-base: #fafafa;
+  --c-base: #fffdf8;
   --c-surface: #ffffff;
-  --c-surface2: #f4f4f5;
-  --c-line: #eaeaea;
-  --c-cream: #111111;
-  --c-muted: #6b7280;
-  --c-primario-soft: #c2410c;
-  --c-boton: #0b0b0c;
+  --c-surface2: #fff6e6;
+  --c-line: #ecdfc6;
+  --c-cream: #2b1b12;
+  --c-muted: #6b5545;
+  --c-primario: #1f8a5b;
+  --c-primario-dim: #1b7d52;
+  --c-primario-soft: #17704a;
+  --c-boton: #1b7d52;
   --c-boton-texto: #ffffff;
   --ok: #15803d;
   --ok-soft: #eaf6ef;
   --danger: #dc2626;
   --danger-soft: #fdeeee;
-  --accent-soft: #fff3e8;
-  --sombra-sm: 0 1px 2px rgba(17, 17, 17, 0.04);
-  --sombra-md: 0 4px 16px -4px rgba(17, 17, 17, 0.08);
+  --accent-soft: #e3f3ea;
+  --sombra-sm: 0 1px 2px rgba(43, 27, 18, 0.05);
+  --sombra-md: 0 4px 16px -4px rgba(43, 27, 18, 0.1);
 }
 
 * {
@@ -274,8 +281,8 @@ html[data-animaciones='sutiles'] .animate-ticketIn {
      .superficie-plataforma.landing-page: esa regla necesita las DOS clases, y
      ponerle landing-page a este envoltorio arrastraría además su posicionamiento
      y sus brillos decorativos, que no pintan nada en un texto de paso. */
-  --font-display: 'Poppins', 'Geist Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-body: 'Nunito', 'Geist Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-display: 'Baloo 2', 'Nunito Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-body: 'Nunito Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   font-family: var(--font-body);
 }
 .contenido-previo h1,
@@ -351,4 +358,24 @@ html[data-animaciones='sutiles'] .animate-ticketIn {
 }
 .contenido-previo th {
   color: var(--c-cream);
+}
+
+/* ---------- Logo de Antojate ----------
+   El isotipo (shared/components/marca/LogoAntojate.jsx) se mece: de -8° a -2°
+   y vuelta. Con "reducir movimiento" la regla de arriba corta el ciclo y queda
+   en la pose de reposo, que es la misma del inicio. */
+.logo-vivo-icono {
+  transform-box: fill-box;
+  transform-origin: 50% 60%;
+  animation: logo-mece 3.2s ease-in-out infinite;
+}
+
+@keyframes logo-mece {
+  0%,
+  100% {
+    transform: rotate(-8deg);
+  }
+  50% {
+    transform: rotate(-2deg) translateY(-1.5px);
+  }
 }

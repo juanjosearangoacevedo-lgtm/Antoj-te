@@ -1,4 +1,4 @@
-# Bitemo en producción: base de datos + backend + frontend/Nginx.
+# Antojate en producción: base de datos + backend + frontend/Nginx.
 # Levantar con:  docker compose up -d --build
 # Las variables vienen del archivo .env de esta carpeta (copiar de .env.example).
 
@@ -75,7 +75,7 @@ services:
       WOMPI_INTEGRITY_SECRET: ${WOMPI_INTEGRITY_SECRET:-}
       WOMPI_EVENTS_SECRET: ${WOMPI_EVENTS_SECRET:-}
       RESEND_API_KEY: ${RESEND_API_KEY:-}
-      CORREO_REMITENTE: "${CORREO_REMITENTE:-Bitemo <no-responder@bitemo.co>}"
+      CORREO_REMITENTE: "${CORREO_REMITENTE:-Antojate <no-responder@bitemo.co>}"
     depends_on:
       db:
         condition: service_healthy

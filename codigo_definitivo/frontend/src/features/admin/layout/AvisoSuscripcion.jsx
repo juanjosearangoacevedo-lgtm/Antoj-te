@@ -19,7 +19,7 @@ export default function AvisoSuscripcion() {
 
   const texto = vencida
     ? carta_apagada
-      ? 'Tu membresía está vencida y tu carta pública ya no se ve. Renueva para volver a atender por Bitemo.'
+      ? 'Tu membresía está vencida y tu carta pública ya no se ve. Renueva para volver a atender por Antojate.'
       : `Tu membresía está vencida. Tu carta sigue visible para tus clientes${
           fechaGracia ? ` hasta el ${fechaGracia}` : ' unos días más'
         }: renueva antes para no dejarlos sin menú.`

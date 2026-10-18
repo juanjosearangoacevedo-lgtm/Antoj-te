@@ -1,5 +1,5 @@
 #!/bin/bash
-# Carga el esquema de Bitemo la PRIMERA vez que arranca el contenedor de MySQL.
+# Carga el esquema de Antojate la PRIMERA vez que arranca el contenedor de MySQL.
 #
 # Docker lo ejecuta solo si el volumen db_data está vacío (así funciona
 # /docker-entrypoint-initdb.d). Eso importa: las migraciones de abajo no son
@@ -52,7 +52,7 @@ ORDEN=(
   2026-08-03_demo_videos_bunny.sql
   2026-08-04_llamados_mesero_y_bienvenida.sql
   2026-08-06_planes_precios_cop.sql
-  # Estas ocho SÍ son idempotentes: consultan information_schema (o usan IF NOT EXISTS) antes de
+  # De aquí en adelante TODAS son idempotentes: consultan information_schema (o usan IF NOT EXISTS) antes de
   # tocar nada, así que se pueden volver a correr sin que reviente. Eso es lo
   # que permite aplicarlas a mano sobre una base que ya tiene datos —que es el
   # caso de producción, donde este script no se ejecuta nunca más.
@@ -64,6 +64,17 @@ ORDEN=(
   2026-09-28_recuperacion_password.sql
   2026-09-28_actualizado_en.sql
   2026-09-28_sesion_version.sql
+  2026-09-29_comensales.sql
+  # Crea `migraciones_aplicadas` y, como llega después de todas las de arriba,
+  # las registra de una vez: una base recién creada queda con su historial
+  # completo sin anotarlo a mano. Por eso va aquí y no en el orden de su fecha.
+  #
+  # CONVENIO PARA LO QUE VENGA: cada migración nueva termina con
+  #   INSERT IGNORE INTO migraciones_aplicadas (archivo, notas) VALUES ('<su nombre>', '<qué hace>');
+  # Así el registro se mantiene solo, tanto aquí como al aplicarla a mano en
+  # producción, que es donde de verdad hacía falta saber qué está puesto.
+  2026-09-15_saneo_esquema.sql
+  2026-10-12_app_feed.sql
 )
 
 for archivo in "${ORDEN[@]}"; do
@@ -82,6 +93,6 @@ for archivo in "${ORDEN[@]}"; do
         < "${MIGRACIONES}/${archivo}"
 done
 
-echo "==> Esquema de Bitemo cargado. Las semillas (roles, planes, superadmin y"
+echo "==> Esquema de Antojate cargado. Las semillas (roles, planes, superadmin y"
 echo "    el restaurante demo) vienen dentro de bitemo_completo.sql: no hay que"
 echo "    correr los scripts de seed a mano."

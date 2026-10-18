@@ -1,4 +1,4 @@
-# Bitemo — Arquitectura del sistema
+# Antojate — Arquitectura del sistema
 
 Plataforma SaaS multi-tenant de **Visual Commerce para restaurantes**: transforma el menú tradicional en una experiencia de video vertical que aumenta la intención de compra y el ticket promedio.
 

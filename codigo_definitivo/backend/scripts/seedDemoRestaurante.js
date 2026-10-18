@@ -1,5 +1,5 @@
 /**
- * Crea un restaurante demo completo para ver toda la experiencia Bitemo:
+ * Crea un restaurante demo completo para ver toda la experiencia Antojate:
  *  - Restaurante "Casa Bitemo" en Plan Pro, aprobado
  *  - Admin: demo@bitemo.com / Demo2026*
  *  - 1 sucursal + 2 mesas (la mesa 1 con QR fijo: bitemo-demo)
@@ -59,7 +59,7 @@ const CARTA = [
 
 // Tema del restaurante demo.
 // NO fija colores ni tipografías a propósito: en NULL, el menú hereda el diseño
-// de Bitemo (naranja #FF7A00, Geist, categorías a pantalla completa). Antes este
+// de Antojate (verde #1F8A5B, Baloo 2 y Nunito Sans). Antes este
 // seed escribía la paleta anterior al rediseño de marca y eso PISABA el diseño
 // nuevo en el menú del comensal, que es como se veía "desactualizado".
 // Un restaurante real elige su paleta desde el panel de personalización.

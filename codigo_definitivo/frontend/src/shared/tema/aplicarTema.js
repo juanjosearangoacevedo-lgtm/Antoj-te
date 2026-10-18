@@ -3,7 +3,7 @@
 import { OPCIONES } from './opciones.js';
 
 // Fuentes de Google disponibles para personalización; se cargan bajo demanda
-// solo cuando el tema del restaurante las usa (la plataforma usa Geist local).
+// solo cuando el tema del restaurante las usa (la plataforma usa Baloo 2 y Nunito Sans locales).
 const FUENTES_GOOGLE = {
   Fraunces: 'Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700',
   Manrope: 'Manrope:wght@400;600;700',
@@ -28,7 +28,7 @@ function cargarFuente(valorFontFamily) {
 }
 
 // Un valor "sin elegir" hereda el default de la plataforma. Es la regla que
-// evita que un tema a medio llenar pise el diseño de Bitemo.
+// evita que un tema a medio llenar pise el diseño de Antojate.
 const sinElegir = (v) => v === undefined || v === null || v === '';
 
 /**

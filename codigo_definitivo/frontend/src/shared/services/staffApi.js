@@ -62,6 +62,13 @@ export const staffApi = {
     // Consulta el estado de transcodificación de un video en Bunny
     estadoVideo: (guid) => pedir(`/platos/video/${guid}/estado`),
   },
+  // Lo que comentan en la app sobre los platos del restaurante. Ocultar no
+  // borra: se puede devolver. ?reportados=1 trae solo los que tienen reportes.
+  comentarios: {
+    listar: (query = '') => pedir(`/comentarios${query}`),
+    moderar: (id, estado) => pedir(`/comentarios/${id}`, { method: 'PATCH', body: JSON.stringify({ estado }) }),
+    eliminar: (id) => pedir(`/comentarios/${id}`, { method: 'DELETE' }),
+  },
   pedidos: {
     listar: (query = '') => pedir(`/pedidos${query}`),
     obtener: (id) => pedir(`/pedidos/${id}`),

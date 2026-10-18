@@ -43,31 +43,31 @@ function plantilla(nombre, enlace) {
   const texto = [
     saludo,
     '',
-    'Recibimos una solicitud para cambiar la contraseña de tu cuenta de Bitemo.',
+    'Recibimos una solicitud para cambiar la contraseña de tu cuenta de Antojate.',
     'Abre este enlace para elegir una nueva (vale por una hora y sirve una sola vez):',
     '',
     enlace,
     '',
     'Si no fuiste tú, ignora este correo: tu contraseña actual sigue funcionando.',
     '',
-    '— El equipo de Bitemo',
+    '— El equipo de Antojate',
   ].join('\n');
 
   // Estilos en línea y tablas: es lo único que respetan todos los clientes de
-  // correo. Botón naranja de marca con texto oscuro (blanco sobre naranja no
-  // pasa el contraste AA).
+  // correo. Botón verde de marca (#1B7D52) con texto blanco: 5.1:1, pasa el
+  // contraste AA.
   const html = `<!doctype html>
-<html lang="es"><body style="margin:0;padding:0;background:#f4f4f5;font-family:Arial,Helvetica,sans-serif;color:#1d1e22">
+<html lang="es"><body style="margin:0;padding:0;background:#fff6e6;font-family:Arial,Helvetica,sans-serif;color:#2b1b12">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="padding:32px 16px">
 <tr><td align="center">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:480px;background:#ffffff;border-radius:16px;padding:32px">
 <tr><td>
-<p style="margin:0 0 24px;font-size:20px;font-weight:bold">Bitemo</p>
+<p style="margin:0 0 24px;font-size:22px;font-weight:bold;color:#1f8a5b">Antojate</p>
 <p style="margin:0 0 16px;font-size:15px;line-height:1.5">${escaparHtml(saludo)}</p>
 <p style="margin:0 0 24px;font-size:15px;line-height:1.5">Recibimos una solicitud para cambiar la contraseña de tu cuenta. Pulsa el botón para elegir una nueva.</p>
-<p style="margin:0 0 24px"><a href="${escaparHtml(enlace)}" style="display:inline-block;background:#ff7a00;color:#1f1200;text-decoration:none;font-weight:bold;font-size:15px;padding:12px 24px;border-radius:12px">Elegir contraseña nueva</a></p>
-<p style="margin:0 0 16px;font-size:13px;line-height:1.5;color:#52525b">El enlace vale por una hora y sirve una sola vez. Si no fuiste tú, ignora este correo: tu contraseña actual sigue funcionando.</p>
-<p style="margin:0;font-size:12px;line-height:1.5;color:#71717a;word-break:break-all">Si el botón no funciona, copia este enlace en tu navegador:<br>${escaparHtml(enlace)}</p>
+<p style="margin:0 0 24px"><a href="${escaparHtml(enlace)}" style="display:inline-block;background:#1b7d52;color:#ffffff;text-decoration:none;font-weight:bold;font-size:15px;padding:12px 24px;border-radius:12px">Elegir contraseña nueva</a></p>
+<p style="margin:0 0 16px;font-size:13px;line-height:1.5;color:#6b5545">El enlace vale por una hora y sirve una sola vez. Si no fuiste tú, ignora este correo: tu contraseña actual sigue funcionando.</p>
+<p style="margin:0;font-size:12px;line-height:1.5;color:#6b5545;word-break:break-all">Si el botón no funciona, copia este enlace en tu navegador:<br>${escaparHtml(enlace)}</p>
 </td></tr></table>
 </td></tr></table>
 </body></html>`;
@@ -91,7 +91,7 @@ async function procesarSolicitud(email, ip) {
   });
 
   const { texto, html } = plantilla(usuario.nombre, enlaceRestablecer(token));
-  await enviarCorreo({ para: usuario.email, asunto: 'Cambia tu contraseña de Bitemo', html, texto });
+  await enviarCorreo({ para: usuario.email, asunto: 'Cambia tu contraseña de Antojate', html, texto });
 }
 
 const solicitar = (email, ip) => {
@@ -99,7 +99,7 @@ const solicitar = (email, ip) => {
     console.error(`[recuperacion] no se pudo procesar la solicitud: ${err.message}`)
   );
   return {
-    mensaje: 'Si ese correo tiene una cuenta en Bitemo, te enviamos un enlace para cambiar la contraseña.',
+    mensaje: 'Si ese correo tiene una cuenta en Antojate, te enviamos un enlace para cambiar la contraseña.',
   };
 };
 

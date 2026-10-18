@@ -74,7 +74,7 @@ const enlaces = (url, items) =>
 // /guias y /restaurantes porque hay un <a> apuntándolos desde la portada, no
 // porque estén listados en el sitemap.
 const navegacion = (url) =>
-  `<nav aria-label="Principal"><ul><li><a href="${url('/')}">Bitemo</a></li>${enlaces(
+  `<nav aria-label="Principal"><ul><li><a href="${url('/')}">Antojate</a></li>${enlaces(
     url,
     ENLACES_CONTENIDO
   )}</ul></nav>`;
@@ -98,7 +98,7 @@ const pie = (url, relacionadas = []) =>
       : ''
   }<footer><p><a href="${url(
     '/'
-  )}">Bitemo</a> — menú digital con QR y video para restaurantes en Colombia.</p></footer>`;
+  )}">Antojate</a> — menú digital con QR y video para restaurantes en Colombia.</p></footer>`;
 
 // --- Cuerpos ---
 
@@ -152,8 +152,8 @@ export function cuerpoPagina(sitio, pagina, relacionadas) {
   const url = crearUrl(sitio);
   const camino =
     pagina.coleccion === 'guia'
-      ? [{ nombre: 'Bitemo', ruta: '/' }, { nombre: 'Guías', ruta: '/guias' }, { nombre: pagina.h1, ruta: pagina.ruta }]
-      : [{ nombre: 'Bitemo', ruta: '/' }, { nombre: pagina.h1, ruta: pagina.ruta }];
+      ? [{ nombre: 'Antojate', ruta: '/' }, { nombre: 'Guías', ruta: '/guias' }, { nombre: pagina.h1, ruta: pagina.ruta }]
+      : [{ nombre: 'Antojate', ruta: '/' }, { nombre: pagina.h1, ruta: pagina.ruta }];
 
   return `${navegacion(url)}
     ${migasHtml(url, camino)}
@@ -175,7 +175,7 @@ export function cuerpoGuias(sitio, guias) {
 
   return `${navegacion(url)}
     ${migasHtml(url, [
-      { nombre: 'Bitemo', ruta: '/' },
+      { nombre: 'Antojate', ruta: '/' },
       { nombre: 'Guías', ruta: '/guias' },
     ])}
     <main>

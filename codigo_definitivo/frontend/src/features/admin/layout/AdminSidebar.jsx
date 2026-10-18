@@ -12,11 +12,13 @@ import {
   Lock,
   ChartNoAxesColumn,
   Receipt,
+  MessageSquare,
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { NavItem } from '@/shared/components/ui';
 import { FEATURES } from '@/shared/constants/features';
 import { staffApi } from '@/shared/services/staffApi';
+import { LogoAntojate } from '@/shared/components/marca/LogoAntojate';
 
 // Solicitudes que nadie ha tocado. Es lo más parecido a una notificación que hay
 // hoy: no existe infraestructura de avisos ni librería de correo, así que sin
@@ -54,8 +56,8 @@ export default function AdminSidebar({ esSuper, hasFeature }) {
   return (
     <aside className="w-full md:w-60 shrink-0 border-b md:border-b-0 md:border-r border-line flex flex-col md:sticky md:top-0 md:h-[100dvh]">
       <div className="px-5 md:px-7 pt-4 md:pt-6 pb-3 md:pb-5">
-        <div className="text-lg font-bold tracking-tight text-cream">Bitemo</div>
-        <div className="text-[11px] text-muted mt-0.5">
+        <LogoAntojate size="sm" />
+        <div className="text-[11px] text-muted mt-1.5">
           {esSuper ? 'Administración global' : 'Panel del restaurante'}
         </div>
       </div>
@@ -71,6 +73,7 @@ export default function AdminSidebar({ esSuper, hasFeature }) {
               Solicitudes
             </NavItem>
             <NavItem to="/admin/usuarios" icono={Users}>Usuarios</NavItem>
+            <NavItem to="/admin/comentarios" icono={MessageSquare}>Comentarios</NavItem>
           </>
         ) : (
           <>
@@ -78,6 +81,9 @@ export default function AdminSidebar({ esSuper, hasFeature }) {
             <NavItem to="/admin/analiticas" icono={ChartNoAxesColumn}>Analíticas</NavItem>
             <NavItem to="/admin/categorias" icono={ListTree}>Categorías</NavItem>
             <NavItem to="/admin/platos" icono={Clapperboard}>Carta y videos</NavItem>
+            {hasFeature(FEATURES.APP_PUBLICA) && (
+              <NavItem to="/admin/comentarios" icono={MessageSquare}>Comentarios</NavItem>
+            )}
             <NavItem to="/admin/personalizacion" icono={Palette}>
               <span className="inline-flex items-center gap-1.5">
                 Personalización

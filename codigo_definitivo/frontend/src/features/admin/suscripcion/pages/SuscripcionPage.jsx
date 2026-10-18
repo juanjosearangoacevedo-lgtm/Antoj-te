@@ -277,7 +277,7 @@ export default function SuscripcionPage() {
 
           {!datos.disponible && (
             <p className="text-sm text-muted mb-4">
-              El pago en línea se activará muy pronto. Mientras tanto, escríbele al equipo de Bitemo para renovar.
+              El pago en línea se activará muy pronto. Mientras tanto, escríbele al equipo de Antojate para renovar.
             </p>
           )}
 

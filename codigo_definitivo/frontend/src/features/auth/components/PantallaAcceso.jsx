@@ -1,4 +1,4 @@
-import { UtensilsCrossed } from 'lucide-react';
+import { LogoAntojate } from '@/shared/components/marca/LogoAntojate';
 import TemaToggle from '@/shared/components/TemaToggle';
 
 // Marco común de las pantallas sin sesión: entrar, recuperar y restablecer la
@@ -11,10 +11,9 @@ export default function PantallaAcceso({ subtitulo, children, pie }) {
       </div>
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
-          <div className="inline-grid place-items-center w-14 h-14 rounded-2xl bg-accent-soft mb-4">
-            <UtensilsCrossed className="text-amber" size={26} />
-          </div>
-          <h1 className="text-2xl font-bold tracking-tight text-cream">Bitemo</h1>
+          <h1 className="inline-flex mb-3">
+            <LogoAntojate size="lg" />
+          </h1>
           <p className="text-muted text-sm mt-1">{subtitulo}</p>
         </div>
 

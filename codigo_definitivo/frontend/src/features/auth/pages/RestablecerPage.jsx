@@ -45,7 +45,7 @@ export default function RestablecerPage() {
   const [enviando, setEnviando] = useState(false);
   const [listo, setListo] = useState(false);
 
-  useTituloPagina('Nueva contraseña · Bitemo');
+  useTituloPagina('Nueva contraseña · Antojate');
 
   // Se guarda para sobrevivir a una recarga y se quita de la barra de
   // direcciones, para que no quede en el historial ni en una captura.

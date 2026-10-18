@@ -38,7 +38,7 @@ const crear = async ({ trampa, password, ...datos }, ip) => {
   //
   // Es a propósito. Si aquí dijéramos "ese correo ya existe", este formulario
   // público se convertiría en una forma de averiguar qué restaurantes son
-  // clientes de Bitemo probando correos, uno por uno, sin ninguna credencial.
+  // clientes de Antojate probando correos, uno por uno, sin ninguna credencial.
   // El precio es que quien se equivoca no se entera al momento; lo ve el
   // superadmin en la bandeja, que es quien puede resolverlo.
   if (datos.email) {
@@ -203,7 +203,7 @@ async function avisarAprobacion(solicitud, plan) {
   const { html, texto } = correoConBoton({
     saludo: solicitud.contacto_nombre ? `Hola, ${solicitud.contacto_nombre}:` : 'Hola:',
     parrafos: [
-      `Aprobamos la cuenta de ${solicitud.restaurante_nombre} en Bitemo, con el plan ${plan.nombre}.`,
+      `Aprobamos la cuenta de ${solicitud.restaurante_nombre} en Antojate, con el plan ${plan.nombre}.`,
       `Tienes ${suscripciones.DIAS_PRUEBA} días de prueba gratis para montar tu carta con video, imprimir los QR de tus mesas y probarlo con tus clientes.`,
       'Entra con este correo y la contraseña que elegiste al solicitarla.',
     ],
@@ -212,7 +212,7 @@ async function avisarAprobacion(solicitud, plan) {
   });
   await enviarCorreo({
     para: solicitud.email,
-    asunto: `Tu cuenta de Bitemo está lista: ${solicitud.restaurante_nombre}`,
+    asunto: `Tu cuenta de Antojate está lista: ${solicitud.restaurante_nombre}`,
     html,
     texto,
   });

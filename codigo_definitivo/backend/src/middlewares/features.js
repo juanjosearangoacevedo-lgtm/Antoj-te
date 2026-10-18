@@ -7,6 +7,7 @@ const FEATURES = {
   PERSONALIZACION: 'personalizacion', // personalización visual (Intermedio+)
   CARRITO: 'carrito', // carrito y pedidos automáticos (Pro)
   KDS: 'kds', // panel de cocina en tiempo real (Pro)
+  APP_PUBLICA: 'app_publica', // sus platos salen en la app móvil (todos los planes)
 };
 
 // Cache en memoria: restaurante_id -> { estado, plan_id, plan_nombre, features, exp }

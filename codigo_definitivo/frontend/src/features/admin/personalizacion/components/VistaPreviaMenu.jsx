@@ -151,7 +151,7 @@ function VistaPreviaPlato({ mostrarPrecio }) {
 
       <div className="absolute inset-x-0 bottom-0 p-4">
         <div className="text-white font-bold text-lg" style={{ fontFamily: 'var(--font-display)' }}>
-          Doble Bitemo Burger
+          Doble Antojate Burger
         </div>
         {mostrarPrecio && (
           <div className="font-semibold text-sm mt-0.5" style={{ color: 'var(--c-primario-soft)' }}>

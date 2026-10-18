@@ -1,4 +1,4 @@
-# Despliegue de Bitemo (VPS + Docker + Cloudflare)
+# Despliegue de Antojate (VPS + Docker + Cloudflare)
 
 Arquitectura en producción:
 
@@ -172,7 +172,7 @@ de `bitemo_completo.sql`. **No corras** `seedRoles.js`, `seedPlanes.js` ni
 
 Confirma que cargó bien:
 ```bash
-docker compose logs db | grep -E "Aplicando|Esquema de Bitemo"
+docker compose logs db | grep -E "Aplicando|Esquema de Antojate"
 ```
 Deberías ver las 6 migraciones aplicadas. Y para verificar los datos:
 ```bash
@@ -244,6 +244,44 @@ docker compose exec -T db mysql --default-character-set=utf8mb4 \
 
 Haz un backup **antes** (`./backup.sh`) y agrega el archivo al arreglo `ORDEN`
 de `init-db.sh`, para que una instalación futura desde cero también lo incluya.
+
+### Qué migraciones tiene puestas una base
+
+Desde `2026-09-15_saneo_esquema.sql` existe la tabla `migraciones_aplicadas`, y
+cada migración nueva se registra a sí misma con un `INSERT IGNORE` al final del
+archivo. Para ver el estado real de un entorno, sin adivinar:
+
+```bash
+docker compose exec -T db mysql -u root -p"$DB_ROOT_PASSWORD" menu_digital_saas \
+  -e "SELECT archivo, aplicada_en FROM migraciones_aplicadas ORDER BY aplicada_en"
+```
+
+La primera vez, esa misma migración registra en retrospectiva las catorce
+anteriores si detecta que la base ya tiene `restaurantes.slug` (la columna que
+añadió la última de la serie), y las del 28 y 29 de septiembre por su propia
+huella (la tabla o columna que solo cada una crea). Si no encuentra la señal, no
+inventa nada: es preferible un historial incompleto a uno que miente.
+
+### Pendiente de aplicar en producción
+
+Se aplican **en este orden**, con un backup antes (`./backup.sh`). Las tres son
+idempotentes y se probaron seguidas, dos veces, sobre una base creada desde
+`bitemo_completo.sql` (ids `INT`, como producción).
+
+1. `2026-09-29_comensales.sql` — las cuentas de la app móvil (fase 1).
+2. `2026-09-15_saneo_esquema.sql` — iguala el esquema de las dos bases. Crea el
+   registro de migraciones; renombra `ingredientes.stock` a `stock_actual` y
+   añade `costo_unitario` (sin eso, **crear un ingrediente desde el panel
+   responde 500 en producción**, porque el model escribe nombres de columna que
+   allí no existen); y deduplica `favoritos` para ponerle el índice único que
+   impide marcar dos veces el mismo plato. Su código funciona con la migración
+   aplicada y sin ella.
+3. `2026-10-12_app_feed.sql` — el feed de la app (fase 2): `en_feed`,
+   `publicado_en` y `duracion_segundos` en `platos`, la feature `app_publica` en
+   todos los planes, `comensal_id` en `favoritos` y las tablas `guardados`,
+   `comentarios`, `comentario_reportes`, `comensal_bloqueos` y `eventos_app`. Si
+   le faltan las dos anteriores se detiene al principio, sin tocar nada. **El
+   código de la fase 2 sí la necesita**: aplícala antes de desplegarlo.
 
 ## Comandos útiles
 

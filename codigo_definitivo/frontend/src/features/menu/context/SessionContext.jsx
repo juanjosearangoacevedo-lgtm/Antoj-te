@@ -31,7 +31,7 @@ export function SessionProvider({ children, slug = null }) {
   const [sesionToken] = useState(getOrCreateSesionToken);
   const [mesa, setMesa] = useState(null);
   const [demoMode, setDemoMode] = useState(false);
-  // El restaurante existe pero no está atendiendo por Bitemo (suspendido, o su
+  // El restaurante existe pero no está atendiendo por Antojate (suspendido, o su
   // membresía venció y pasó la gracia). El QR impreso sigue en la mesa: hay que
   // decirle al comensal que la carta no está, no enseñarle una carta vacía.
   const [noDisponible, setNoDisponible] = useState(false);

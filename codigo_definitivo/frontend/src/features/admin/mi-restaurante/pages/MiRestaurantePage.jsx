@@ -189,7 +189,7 @@ export default function MiRestaurantePage() {
             <div className="text-xs uppercase tracking-wide text-muted mb-2">Estado</div>
             <Badge tono={TONO_ESTADO[estadoRestaurante] || 'neutro'}>{estadoRestaurante || '—'}</Badge>
             {estadoRestaurante === 'pendiente' && (
-              <p className="text-[11px] text-muted mt-2">Tu restaurante está pendiente de aprobación por el equipo de Bitemo.</p>
+              <p className="text-[11px] text-muted mt-2">Tu restaurante está pendiente de aprobación por el equipo de Antojate.</p>
             )}
             {estadoRestaurante === 'suspendido' && (
               <p className="text-[11px] text-danger mt-2">Tu restaurante está suspendido. Contacta a soporte.</p>

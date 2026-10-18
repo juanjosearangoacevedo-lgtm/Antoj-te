@@ -72,7 +72,7 @@ export default function DashboardGlobalPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
         <div>
-          <h2 className="text-sm font-semibold text-cream mb-1">Quién usa más Bitemo</h2>
+          <h2 className="text-sm font-semibold text-cream mb-1">Quién usa más Antojate</h2>
           <p className="text-xs text-muted mb-3">Comensales distintos en los últimos 30 días.</p>
           <div className="bg-surface border border-line rounded-2xl p-5 shadow-sm">
             <Barras

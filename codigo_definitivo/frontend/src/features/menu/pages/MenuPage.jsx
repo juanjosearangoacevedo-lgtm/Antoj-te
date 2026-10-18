@@ -1,8 +1,16 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useSession } from '@/features/menu/hooks/useSession';
 import { useTituloPagina } from '@/shared/hooks/useTituloPagina';
+import { formatoMoneda, monedaActiva } from '@/shared/utils/formato';
 import { api } from '@/features/menu/services/menu.api';
 import { CATEGORIAS_DEMO, PLATOS_DEMO } from '@/features/menu/data/mock';
+import {
+  construirGrupos,
+  delChef,
+  filtrar,
+  opcionesElegibles,
+  seleccionVigente,
+} from '@/features/menu/logica/antojos';
 
 import Welcome, { LLAMADO } from '@/features/menu/components/Welcome';
 import CategoryPicker from '@/features/menu/components/CategoryPicker';
@@ -12,6 +20,7 @@ import AddToCartSheet from '@/features/menu/components/AddToCartSheet';
 import MiniCartBar from '@/features/menu/components/MiniCartBar';
 import CartView from '@/features/menu/components/CartView';
 import OrderTracking from '@/features/menu/components/OrderTracking';
+import HojaAntojate from '@/features/menu/components/HojaAntojate';
 
 const VISTAS = {
   WELCOME: 'welcome',
@@ -46,7 +55,16 @@ export default function MenuPage() {
   const compartidoAplicado = useRef(false);
   const [estadoLlamado, setEstadoLlamado] = useState(LLAMADO.LISTO);
 
-  // En la pestaña va la marca del restaurante, no la de Bitemo.
+  // Lo que el comensal eligió con ANTOJATE. Vive aquí y no en la carta para que
+  // siga igual al ir y volver entre la carta, el feed y el carrito.
+  const [antojos, setAntojos] = useState([]);
+  const [hojaAntojateAbierta, setHojaAntojateAbierta] = useState(false);
+  // El feed abierto desde una tarjeta: desliza por esa lista (los resultados del
+  // antojo o los recomendados del chef) y arranca en el plato tocado.
+  const [secuencia, setSecuencia] = useState(null);
+  const [platoInicial, setPlatoInicial] = useState(null);
+
+  // En la pestaña va la marca del restaurante, no la de Antojate.
   useTituloPagina(mesa?.restaurante_nombre ? `${mesa.restaurante_nombre} · Menú` : null);
 
   useEffect(() => {
@@ -87,9 +105,23 @@ export default function MenuPage() {
     setVista(VISTAS.FEED);
   }, [platoCompartido, platosTodos]);
 
+  // ANTOJATE: las opciones salen de la carta real; lo guardado que ya no existe
+  // (una categoría que el restaurante quitó) no cuenta.
+  const grupos = useMemo(
+    () => construirGrupos(platosTodos, { moneda: monedaActiva(), formatear: (v) => formatoMoneda(v) }),
+    [platosTodos]
+  );
+  const etiquetasAntojos = useMemo(() => opcionesElegibles(grupos), [grupos]);
+  const antojosActivos = useMemo(() => seleccionVigente(antojos, etiquetasAntojos), [antojos, etiquetasAntojos]);
+  const resultadosAntojo = useMemo(() => filtrar(platosTodos, antojosActivos), [platosTodos, antojosActivos]);
+  const recomendadosChef = useMemo(() => delChef(platosTodos), [platosTodos]);
+
   const q = busqueda.trim().toLowerCase();
-  // El feed muestra los resultados de búsqueda si hay término; si no, la categoría activa.
-  const platosDelFeed = q
+  // El feed muestra, en este orden: la lista desde la que se tocó un plato, los
+  // resultados de búsqueda si hay término, o la categoría activa.
+  const platosDelFeed = secuencia
+    ? secuencia.platos
+    : q
     ? platosTodos.filter((p) => `${p.nombre} ${p.descripcion || ''}`.toLowerCase().includes(q))
     : categoriaActiva
     ? platosTodos.filter((p) => p.categoria === categoriaActiva.nombre)
@@ -97,13 +129,35 @@ export default function MenuPage() {
 
   const abrirCategoria = (cat) => {
     setBusqueda('');
+    setSecuencia(null);
+    setPlatoInicial(null);
     setCategoriaActiva(cat);
     setVista(VISTAS.FEED);
   };
 
-  const verResultadosBusqueda = () => {
+  // Desde la búsqueda, el feed arranca en el plato que se tocó, no en el primero.
+  const verResultadosBusqueda = (plato) => {
+    setSecuencia(null);
+    setPlatoInicial(plato?.id ?? null);
     setCategoriaActiva(null);
     setVista(VISTAS.FEED);
+  };
+
+  // Desde una tarjeta: el feed desliza por esa misma lista y arranca en el plato.
+  const abrirPlato = (plato, lista, titulo) => {
+    setBusqueda('');
+    setSecuencia({ platos: lista, titulo });
+    setPlatoInicial(plato.id);
+    setVista(VISTAS.FEED);
+  };
+
+  // Vuelve a la pantalla de la que se vino. La búsqueda se conserva: si el feed
+  // se abrió desde los resultados, se regresa a esos mismos resultados (abrir una
+  // categoría o una tarjeta ya la limpia, así que en esos casos llega vacía).
+  const volverALaCarta = () => {
+    setSecuencia(null);
+    setPlatoInicial(null);
+    setVista(VISTAS.CATEGORIAS);
   };
 
   const toggleFavorito = useCallback(
@@ -220,7 +274,7 @@ export default function MenuPage() {
     );
   }
 
-  // QR de un restaurante que no está atendiendo por Bitemo (suspendido, o su
+  // QR de un restaurante que no está atendiendo por Antojate (suspendido, o su
   // membresía venció y pasó la gracia). El comensal no tiene la culpa: se le dice
   // con claridad, sin mencionar pagos, y se le sugiere pedir la carta en persona.
   if (noDisponible) {
@@ -245,10 +299,10 @@ export default function MenuPage() {
         <div>
           <h1 className="font-display text-2xl font-bold text-cream mb-3">Carta no disponible</h1>
           <p className="text-muted text-sm leading-relaxed max-w-sm">
-            Este restaurante no tiene una carta pública en Bitemo, o cambió su dirección.
+            Este restaurante no tiene una carta pública en Antojate, o cambió su dirección.
           </p>
           <a href="/" className="inline-block mt-6 text-sm font-semibold text-amber hover:underline">
-            Ir a Bitemo
+            Ir a Antojate
           </a>
         </div>
       </div>
@@ -304,6 +358,14 @@ export default function MenuPage() {
               setBusqueda('');
               setVista(VISTAS.WELCOME);
             }}
+            antojos={antojosActivos}
+            etiquetasAntojos={etiquetasAntojos}
+            resultadosAntojo={resultadosAntojo}
+            recomendadosChef={recomendadosChef}
+            onAbrirAntojate={platosTodos.length ? () => setHojaAntojateAbierta(true) : null}
+            onQuitarAntojo={(id) => setAntojos((a) => a.filter((x) => x !== id))}
+            onLimpiarAntojos={() => setAntojos([])}
+            onAbrirPlato={abrirPlato}
           />
           {puedeOrdenar && (
             <MiniCartBar
@@ -319,17 +381,16 @@ export default function MenuPage() {
         <>
           <VideoFeed
             platos={platosDelFeed}
-            categoriaNombre={q ? `Resultados: “${busqueda.trim()}”` : categoriaActiva?.nombre}
+            categoriaNombre={
+              secuencia ? secuencia.titulo : q ? `Resultados: “${busqueda.trim()}”` : categoriaActiva?.nombre
+            }
             favoritosIds={favoritosIds}
-            onVolver={() => {
-              setBusqueda('');
-              setVista(VISTAS.CATEGORIAS);
-            }}
+            onVolver={volverALaCarta}
             onToggleFavorito={toggleFavorito}
             onAbrirInfo={abrirInfo}
             onAgregarCarrito={puedeOrdenar ? setPlatoAAgregar : null}
             registrarEvento={registrarEvento}
-            platoInicialId={platoCompartido}
+            platoInicialId={platoInicial ?? platoCompartido}
           />
           {puedeOrdenar && (
             <MiniCartBar
@@ -376,6 +437,18 @@ export default function MenuPage() {
         onClose={() => setPlatoAAgregar(null)}
         onConfirmar={confirmarAgregarCarrito}
         demoMode={demoMode}
+      />
+
+      <HojaAntojate
+        abierta={hojaAntojateAbierta}
+        grupos={grupos}
+        platos={platosTodos}
+        seleccion={antojosActivos}
+        onCerrar={() => setHojaAntojateAbierta(false)}
+        onAplicar={(nuevos) => {
+          setAntojos(nuevos);
+          setHojaAntojateAbierta(false);
+        }}
       />
     </div>
   );

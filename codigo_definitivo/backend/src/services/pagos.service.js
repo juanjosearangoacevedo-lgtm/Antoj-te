@@ -98,7 +98,7 @@ const resumen = async (restauranteId) => {
 // Crea el pago pendiente y devuelve a dónde mandar al navegador.
 const iniciar = async (restauranteId, periodo) => {
   if (!disponible()) {
-    throw new ApiError(503, 'Los pagos en línea aún no están activos. Escríbele al equipo de Bitemo.');
+    throw new ApiError(503, 'Los pagos en línea aún no están activos. Escríbele al equipo de Antojate.');
   }
 
   const restaurante = await restaurantesModel.buscarPorId(restauranteId);

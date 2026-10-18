@@ -76,6 +76,15 @@ test('authenticate rechaza un token con una version de sesion vieja', async () =
   }
 });
 
+// El comensal 2 y el empleado 2 existen a la vez, con la misma version de sesion
+// (0). Antes de separar las claves, este token habria pasado como el de Ana.
+test('authenticate rechaza un token de comensal aunque su id coincida con un empleado', async () => {
+  const { firmarComensal } = require('../../../src/utils/jwt');
+  const next = espia();
+  await authenticate({ headers: { authorization: `Bearer ${firmarComensal({ sub: '2', id: 2, sv: 0 })}` } }, {}, next);
+  assert.strictEqual(next.errores()[0]?.statusCode, 401);
+});
+
 test('authenticate rechaza el token de un usuario borrado', async () => {
   const next = espia();
   await authenticate({ headers: { authorization: `Bearer ${sign({ ...ADMIN, id: 99 })}` } }, {}, next);

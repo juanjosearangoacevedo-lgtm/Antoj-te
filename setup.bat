@@ -1,7 +1,7 @@
 @echo off
 setlocal
 REM ============================================================
-REM  Bitemo - Configuracion inicial (ejecutar UNA sola vez)
+REM  Antojate - Configuracion inicial (ejecutar UNA sola vez)
 REM  Uso: doble clic, o en la terminal de VS Code:  .\setup.bat
 REM
 REM  La contrasena de MySQL se toma de la variable de entorno

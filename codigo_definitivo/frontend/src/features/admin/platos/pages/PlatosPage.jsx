@@ -31,6 +31,8 @@ const FORM_VACIO = {
   recomendado_dias: '',
   recomendado_hora_inicio: '',
   recomendado_hora_fin: '',
+  // Un plato nuevo sale también en la app salvo que el restaurante lo quite.
+  en_feed: true,
 };
 
 export default function PlatosPage() {
@@ -66,7 +68,9 @@ export default function PlatosPage() {
         try {
           const r = await staffApi.platos.estadoVideo(p.video_guid);
           if (r.estado !== 'procesando') {
-            await staffApi.platos.actualizar(p.id, { video_status: r.estado });
+            // La duración la usa la app para saber si alguien vio el video entero.
+            const duracion = r.estado === 'listo' && r.duracion > 0 ? { duracion_segundos: Math.round(r.duracion) } : {};
+            await staffApi.platos.actualizar(p.id, { video_status: r.estado, ...duracion });
             cambio = true;
           }
         } catch {
@@ -107,6 +111,7 @@ export default function PlatosPage() {
       recomendado_dias: p.recomendado_dias || '',
       recomendado_hora_inicio: (p.recomendado_hora_inicio || '').slice(0, 5), // "HH:MM:SS" → "HH:MM"
       recomendado_hora_fin: (p.recomendado_hora_fin || '').slice(0, 5),
+      en_feed: p.en_feed === undefined ? true : Boolean(p.en_feed),
     });
     setEditando(p);
   };
@@ -142,6 +147,7 @@ export default function PlatosPage() {
       recomendado_dias: form.recomendado_chef ? form.recomendado_dias : '',
       recomendado_hora_inicio: form.recomendado_chef ? form.recomendado_hora_inicio : '',
       recomendado_hora_fin: form.recomendado_chef ? form.recomendado_hora_fin : '',
+      en_feed: form.en_feed,
     };
     try {
       const plato =
@@ -264,6 +270,11 @@ export default function PlatosPage() {
                 ) : (
                   <div className="text-[11px] text-muted truncate max-w-[220px]">{p.video_url}</div>
                 )}
+                {p.en_feed === 0 || p.en_feed === false ? (
+                  <div className="mt-0.5">
+                    <Badge tono="neutro">Fuera de la app</Badge>
+                  </div>
+                ) : null}
               </td>
               <td className="px-4 py-3 text-muted">{nombreCategoria(p.categoria_id)}</td>
               <td className="px-4 py-3 text-cream font-semibold tabular-nums">${Number(p.precio).toLocaleString()}</td>
@@ -415,6 +426,22 @@ export default function PlatosPage() {
               </div>
             </div>
           )}
+
+          {/* Solo afecta a la app: la carta por QR y la vitrina lo siguen mostrando. */}
+          <label className="flex items-start gap-2 mb-4 text-sm text-cream cursor-pointer">
+            <input
+              type="checkbox"
+              checked={form.en_feed}
+              onChange={(e) => setForm({ ...form, en_feed: e.target.checked })}
+              className="mt-1 accent-[var(--c-primario)]"
+            />
+            <span>
+              Aparece en la app
+              <span className="block text-[11px] text-muted">
+                Si lo desmarcas, sigue en tu carta por QR, pero no sale en el feed de la app.
+              </span>
+            </span>
+          </label>
           <Btn type="submit" className="w-full">Guardar plato</Btn>
         </form>
       </Modal>

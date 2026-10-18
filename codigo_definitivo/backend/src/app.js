@@ -43,7 +43,7 @@ app.use(cors({ origin: origenesPermitidos }));
 app.use(morgan(process.env.NODE_ENV === 'production' ? 'combined' : 'dev'));
 
 // Tope explicito del cuerpo. El de por defecto de express.json ya es 100kb,
-// pero conviene que este escrito: ningun endpoint de Bitemo recibe mas que un
+// pero conviene que este escrito: ningun endpoint de Antojate recibe mas que un
 // tema visual con sus JSON, y el video no pasa por aqui (va directo a Bunny).
 app.use(express.json({ limit: '100kb' }));
 

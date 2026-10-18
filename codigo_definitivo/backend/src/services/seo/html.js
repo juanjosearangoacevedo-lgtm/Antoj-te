@@ -50,7 +50,7 @@ function cabeceras({ titulo, descripcion, canonical, imagen, tipoOg = 'website',
     `<link rel="canonical" href="${esc(canonical)}" />`,
     robots ? `<meta name="robots" content="${esc(robots)}" />` : '',
     `<meta property="og:type" content="${esc(tipoOg)}" />`,
-    `<meta property="og:site_name" content="Bitemo" />`,
+    `<meta property="og:site_name" content="Antojate" />`,
     `<meta property="og:locale" content="es_CO" />`,
     `<meta property="og:url" content="${esc(canonical)}" />`,
     `<meta property="og:title" content="${esc(titulo)}" />`,
@@ -58,7 +58,7 @@ function cabeceras({ titulo, descripcion, canonical, imagen, tipoOg = 'website',
     `<meta property="og:image" content="${esc(img)}" />`,
     `<meta property="og:image:width" content="1200" />`,
     `<meta property="og:image:height" content="630" />`,
-    `<meta property="og:image:alt" content="Bitemo — menú digital con QR y video para restaurantes" />`,
+    `<meta property="og:image:alt" content="Antojate — menú digital con QR y video para restaurantes" />`,
     `<meta name="twitter:card" content="summary_large_image" />`,
     `<meta name="twitter:title" content="${esc(titulo)}" />`,
     `<meta name="twitter:description" content="${esc(descripcion)}" />`,
@@ -115,7 +115,7 @@ function ensamblar(plantilla, { cuerpo, datos, ...meta }) {
 // /guias y /restaurantes porque están aquí, no porque estén en el sitemap.
 function navegacion() {
   return `<nav aria-label="Principal">
-      <a href="${url('/')}">Bitemo</a>
+      <a href="${url('/')}">Antojate</a>
       <a href="${url('/menu-digital-con-video')}">Menú con video</a>
       <a href="${url('/menu-qr-para-restaurantes')}">Menú QR</a>
       <a href="${url('/restaurantes')}">Restaurantes</a>
@@ -135,7 +135,7 @@ function pie(relacionadas = []) {
 
   return `${enlaces}
     <footer>
-      <p><a href="${url('/')}">Bitemo</a> — menú digital con QR y video para restaurantes en Colombia.</p>
+      <p><a href="${url('/')}">Antojate</a> — menú digital con QR y video para restaurantes en Colombia.</p>
     </footer>`;
 }
 

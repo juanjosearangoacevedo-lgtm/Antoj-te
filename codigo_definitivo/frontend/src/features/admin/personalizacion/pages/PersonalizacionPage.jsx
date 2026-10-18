@@ -112,7 +112,7 @@ export default function PersonalizacionPage() {
             className="inline-flex items-center gap-1.5 text-xs text-muted hover:text-cream mt-4 transition-colors"
           >
             <RotateCcw size={13} />
-            Restablecer toda la personalización al diseño de Bitemo
+            Restablecer toda la personalización al diseño de Antojate
           </button>
         </div>
 

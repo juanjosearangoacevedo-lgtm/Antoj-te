@@ -25,8 +25,10 @@ export default function LandingPage() {
     if (id) document.getElementById(id)?.scrollIntoView();
   }, []);
 
+  // tema-barrio activa la propuesta 3 (verde cilantro sobre blanco). Para
+  // volver al tema oscuro de Antójate basta con quitar esa clase.
   return (
-    <div className="landing-page superficie-plataforma min-h-[100dvh] bg-base">
+    <div className="landing-page superficie-plataforma tema-barrio min-h-[100dvh] bg-base">
       <LandingNav />
       <main>
         <Hero />

@@ -3,7 +3,7 @@
 --
 -- QUÉ CAMBIA
 -- La tabla `planes` guardaba 29 / 59 / 99: cifras pensadas en dólares, de
--- cuando el precio todavía no estaba decidido. Bitemo vende en Colombia y
+-- cuando el precio todavía no estaba decidido. Antojate vende en Colombia y
 -- factura en pesos, así que el panel mostraba "$29/mes" —un número que no
 -- corresponde a nada que se le pueda cobrar a un restaurante.
 --
@@ -16,7 +16,7 @@
 --
 -- QUÉ NO CAMBIA
 -- Los precios de los PLATOS. Esos los fija cada restaurante en la moneda que
--- eligió (restaurantes.moneda) y no tienen relación con lo que paga por Bitemo.
+-- eligió (restaurantes.moneda) y no tienen relación con lo que paga por Antojate.
 --
 -- POR QUÉ EL LIKE 'B_sico' EN LUGAR DE = 'Básico'
 -- El cliente `mysql` de la imagen arranca en latin1. Si alguien corre este

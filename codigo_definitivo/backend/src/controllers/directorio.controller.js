@@ -6,7 +6,7 @@ const { NotFoundError } = require('../errors');
 //
 // La versión en HTML la escribe el servidor para los buscadores (ver
 // routes/seo.routes.js). Esta la pide React para pintar la misma página con el
-// diseño de Bitemo, y para navegar dentro de la SPA sin recargar.
+// diseño de Antojate, y para navegar dentro de la SPA sin recargar.
 //
 // Las dos salen del MISMO servicio, así que la puerta de calidad —cuántos platos
 // necesita un restaurante para aparecer, cuántos restaurantes necesita una

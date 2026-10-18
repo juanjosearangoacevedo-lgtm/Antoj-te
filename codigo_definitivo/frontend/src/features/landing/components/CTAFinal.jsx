@@ -1,6 +1,6 @@
 import { Play } from 'lucide-react';
 import { Btn } from '@/shared/components/ui';
-import MascotaBitemo from './marca/MascotaBitemo';
+import MascotaAntojate from '@/shared/components/marca/MascotaAntojate';
 import { DEMO_LINK_PROPS } from '@/features/landing/contenido/demo';
 import { CTA_FINAL } from '@/features/landing/contenido/landing';
 
@@ -11,8 +11,9 @@ export default function CTAFinal() {
         <div className="tarjeta-destacada relative rounded-[2rem] px-6 pt-32 pb-10 sm:px-10 sm:pt-10 shadow-card">
           {/* En móvil la mascota se centra arriba; desde sm se asoma por el
               costado y la tarjeta recupera su padding normal. */}
-          <MascotaBitemo
+          <MascotaAntojate
             expresion="celebrando"
+            sobreVerde
             className="mascota-flotante pointer-events-none absolute -top-6 left-1/2 w-28 -translate-x-1/2 sm:left-auto sm:-right-4 sm:-top-10 sm:w-36 sm:translate-x-0 lg:-right-12 lg:w-44"
           />
 

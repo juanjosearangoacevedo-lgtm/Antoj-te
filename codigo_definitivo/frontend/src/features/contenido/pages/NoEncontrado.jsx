@@ -2,9 +2,9 @@ import { Link } from 'react-router-dom';
 import ContenidoLayout from '@/features/contenido/components/ContenidoLayout';
 
 const SALIDAS = [
-  { ruta: '/', texto: 'Portada de Bitemo' },
+  { ruta: '/', texto: 'Portada de Antojate' },
   { ruta: '/guias', texto: 'Guías para restaurantes' },
-  { ruta: '/restaurantes', texto: 'Restaurantes en Bitemo' },
+  { ruta: '/restaurantes', texto: 'Restaurantes en Antojate' },
 ];
 
 /**

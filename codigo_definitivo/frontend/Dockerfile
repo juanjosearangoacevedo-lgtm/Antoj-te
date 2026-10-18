@@ -1,4 +1,4 @@
-# Frontend React/Vite de Bitemo — build estático servido por Nginx.
+# Frontend React/Vite de Antojate — build estático servido por Nginx.
 # Nginx también hace de reverse proxy hacia el backend en /api.
 
 # --- Etapa 1: build del SPA ---

@@ -230,7 +230,7 @@ test('el FAQPage sale de las mismas preguntas que se pintan', () => {
 
 test('las migas numeran desde 1 y terminan en la propia página', () => {
   const camino = [
-    { nombre: 'Bitemo', ruta: '/' },
+    { nombre: 'Antojate', ruta: '/' },
     { nombre: 'Guías', ruta: '/guias' },
     { nombre: 'X', ruta: '/guias/x' },
   ];

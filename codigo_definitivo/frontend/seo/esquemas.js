@@ -6,7 +6,7 @@
 //
 // Las entidades se declaran UNA vez y se referencian por @id desde el resto de
 // páginas. Esa es la diferencia entre que un buscador vea "una web que habla de
-// menús" y que reconozca a Bitemo como una entidad concreta con un sitio, un
+// menús" y que reconozca a Antojate como una entidad concreta con un sitio, un
 // producto y unos contenidos colgando de ella.
 
 import { crearUrl } from './comun.js';
@@ -26,12 +26,12 @@ export function entidadesBase(sitio) {
     {
       '@type': 'Organization',
       '@id': idOrganizacion(sitio),
-      name: 'Bitemo',
+      name: 'Antojate',
       alternateName: 'Bite Motion',
       url: url('/'),
       logo: url('/marca/og.png'),
       description:
-        'Bitemo es una plataforma colombiana de menú digital con código QR para restaurantes, en la que cada plato se presenta en video vertical y el comensal pide desde su mesa.',
+        'Antojate es una plataforma colombiana de menú digital con código QR para restaurantes, en la que cada plato se presenta en video vertical y el comensal pide desde su mesa.',
       // El país se declara explícito: es la señal de que esto va de Colombia, y
       // sostiene todo lo demás que se dice sobre el mercado.
       areaServed: { '@type': 'Country', name: 'Colombia' },
@@ -41,7 +41,7 @@ export function entidadesBase(sitio) {
       '@type': 'WebSite',
       '@id': idSitio(sitio),
       url: url('/'),
-      name: 'Bitemo',
+      name: 'Antojate',
       inLanguage: 'es',
       publisher: { '@id': idOrganizacion(sitio) },
       // Sin potentialAction/SearchAction: el sitio no tiene buscador propio y
@@ -50,7 +50,7 @@ export function entidadesBase(sitio) {
     {
       '@type': 'SoftwareApplication',
       '@id': idProducto(sitio),
-      name: 'Bitemo',
+      name: 'Antojate',
       url: url('/'),
       applicationCategory: 'BusinessApplication',
       applicationSubCategory: 'Menú digital para restaurantes',

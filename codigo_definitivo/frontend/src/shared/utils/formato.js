@@ -17,7 +17,12 @@ export function setMoneda(codigo) {
   if (codigo && MONEDAS[codigo]) monedaActual = codigo;
 }
 
-// Moneda en la que Bitemo factura sus propias suscripciones. Es independiente
+/** La moneda activa del menú abierto (la que fijó SessionContext). */
+export function monedaActiva() {
+  return monedaActual;
+}
+
+// Moneda en la que Antojate factura sus propias suscripciones. Es independiente
 // de `monedaActual`: esa es la del menú de cada restaurante y la elige él.
 export const MONEDA_PLANES = 'COP';
 
@@ -33,7 +38,7 @@ export function formatoMoneda(valor, codigo) {
   }).format(Number(valor) || 0);
 }
 
-// Precio de un plan de Bitemo (panel de superadmin). Siempre en pesos, sin
+// Precio de un plan de Antojate (panel de superadmin). Siempre en pesos, sin
 // decimales: "$ 169.900". No usa la moneda activa a propósito —el menú que esté
 // abierto no debe cambiar cómo se ve lo que cobramos nosotros.
 export function formatoPrecioPlan(valor) {

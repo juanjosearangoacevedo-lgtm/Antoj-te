@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import { Btn } from '@/shared/components/ui';
-import { BitemoLogo } from './marca/BitemoLogo';
+import { LogoAntojate } from '@/shared/components/marca/LogoAntojate';
 
 const SECCIONES = [
   { ancla: '#como-funciona', texto: 'Cómo funciona' },
@@ -19,11 +19,10 @@ export default function LandingNav() {
   return (
     <header className="nav-landing sticky top-0 z-30 backdrop-blur-xl">
       <nav className="max-w-6xl mx-auto px-5 h-20 flex items-center justify-between gap-4">
-        {/* "Bite Motion" en vez del tagline: dice de dónde viene el nombre y,
-            al ser corto, cabe también en móvil junto al botón (el tagline
-            largo no cabía y había que ocultarlo). */}
-        <Link to="/" className="rounded-xl" aria-label="Bitemo, de Bite Motion. Ir al inicio">
-          <BitemoLogo size="md" leyenda="origen" />
+        {/* Leyenda corta en vez del tagline: cabe también en móvil junto al
+            botón (el tagline largo no cabía y había que ocultarlo). */}
+        <Link to="/" className="rounded-xl" aria-label="Antojate. Ir al inicio">
+          <LogoAntojate size="md" leyenda="corta" />
         </Link>
 
         <div className="flex items-center gap-1 sm:gap-2">

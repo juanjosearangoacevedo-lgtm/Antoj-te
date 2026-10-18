@@ -36,6 +36,12 @@ const camposPlato = {
   recomendado_dias: dias,
   recomendado_hora_inicio: hora,
   recomendado_hora_fin: hora,
+  // "Aparece en la app". Solo cambia el feed de la app: la carta por QR y la
+  // vitrina enseñan el plato igual.
+  en_feed: booleano,
+  // La duración que informa Bunny al terminar de procesar el video. Una hora de
+  // techo: un plato no tiene videos más largos.
+  duracion_segundos: z.coerce.number().int().min(0).max(3600).optional().nullable(),
 };
 
 const crear = z.object(camposPlato);

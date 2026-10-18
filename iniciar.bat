@@ -1,12 +1,12 @@
 @echo off
 REM ============================================================
-REM  Bitemo - Levanta backend y frontend (uso diario)
+REM  Antojate - Levanta backend y frontend (uso diario)
 REM  Uso: doble clic, o en la terminal de VS Code:  .\iniciar.bat
 REM ============================================================
 cd /d "%~dp0"
 
-start "Bitemo Backend (puerto 3000)"  cmd /k "cd /d ""%~dp0codigo_definitivo\backend"" && npm run dev"
-start "Bitemo Frontend (puerto 5173)" cmd /k "cd /d ""%~dp0codigo_definitivo\frontend"" && npm run dev"
+start "Antojate Backend (puerto 3000)"  cmd /k "cd /d ""%~dp0codigo_definitivo\backend"" && npm run dev"
+start "Antojate Frontend (puerto 5173)" cmd /k "cd /d ""%~dp0codigo_definitivo\frontend"" && npm run dev"
 
 timeout /t 6 /nobreak >nul
 start http://localhost:5173/login

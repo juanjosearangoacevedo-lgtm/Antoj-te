@@ -1,4 +1,4 @@
-// Kit de UI de la plataforma Bitemo.
+// Kit de UI de la plataforma Antojate.
 // Punto de entrada único: `import { Btn, Card, Modal } from '@/shared/components/ui'`.
 // Ningún módulo debe importar los archivos sueltos directamente.
 export { Card } from './Card';

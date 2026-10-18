@@ -40,7 +40,7 @@ test('un tema vacío no escribe ninguna variable CSS', () => {
     estilo_tarjetas: '',
     tipografia_titulos: '',
   });
-  assert.deepStrictEqual(estilos, {}, 'los valores vacíos deben heredar el default de Bitemo');
+  assert.deepStrictEqual(estilos, {}, 'los valores vacíos deben heredar el default de Antojate');
 });
 
 test('un tema nulo o indefinido no rompe', () => {

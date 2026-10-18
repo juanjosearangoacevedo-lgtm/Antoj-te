@@ -16,7 +16,7 @@ export default function LoginPage() {
 
   // Sin esto la pestaña heredaría el título de venta de index.html, que es lo
   // que ve un mesero al entrar a trabajar.
-  useTituloPagina('Entrar · Bitemo');
+  useTituloPagina('Entrar · Antojate');
 
   const onSubmit = async (e) => {
     e.preventDefault();

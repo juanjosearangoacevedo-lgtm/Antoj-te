@@ -109,7 +109,7 @@ export const PREGUNTAS = {
 export const CTA_FINAL = {
   h2: 'Crea la experiencia visual que tu carta necesita.',
   texto:
-    'Bitemo pone el foco en tus platos, tus colores y tu voz. Actualiza tu menú, sube videos y convierte cada visita en una orden.',
+    'Antojate pone el foco en tus platos, tus colores y tu voz. Actualiza tu menú, sube videos y convierte cada visita en una orden.',
 };
 
 // Enlaces del pie hacia el contenido indexable. Están aquí, y no sueltos en el
@@ -120,6 +120,6 @@ export const CTA_FINAL = {
 export const ENLACES_CONTENIDO = [
   { ruta: '/menu-digital-con-video', texto: 'Menú digital con video' },
   { ruta: '/menu-qr-para-restaurantes', texto: 'Menú QR para restaurantes' },
-  { ruta: '/restaurantes', texto: 'Restaurantes en Bitemo' },
+  { ruta: '/restaurantes', texto: 'Restaurantes en Antojate' },
   { ruta: '/guias', texto: 'Guías para restaurantes' },
 ];

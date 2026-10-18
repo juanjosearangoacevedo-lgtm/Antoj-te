@@ -43,6 +43,7 @@ const PersonalizacionPage = lazy(() => import('@/features/admin/personalizacion/
 const MesasPage = lazy(() => import('@/features/admin/mesas/pages/MesasPage'));
 const AnaliticasPage = lazy(() => import('@/features/admin/analiticas/pages/AnaliticasPage'));
 const SuscripcionPage = lazy(() => import('@/features/admin/suscripcion/pages/SuscripcionPage'));
+const ComentariosPage = lazy(() => import('@/features/admin/comentarios/pages/ComentariosPage'));
 
 // Espera del comensal: negro a pantalla completa, igual que el fondo del menú,
 // para que la transición no sea un destello blanco antes del video.
@@ -125,6 +126,8 @@ export default function AppRouter() {
         <Route path="analiticas" element={<AnaliticasPage />} />
         <Route path="categorias" element={<CategoriasPage />} />
         <Route path="platos" element={<PlatosPage />} />
+        {/* Lo que comentan en la app sobre los platos */}
+        <Route path="comentarios" element={<ComentariosPage />} />
         <Route path="personalizacion" element={<PersonalizacionPage />} />
         <Route path="mesas" element={<MesasPage />} />
         {/* Solo restaurante: el superadmin no tiene membresía que pagar */}

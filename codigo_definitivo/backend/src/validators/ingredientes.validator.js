@@ -1,7 +1,11 @@
 const { z, id, idOpcional, texto, booleano } = require('./comunes');
 
+// El tope es 150 y no 255 porque esa es la anchura real de la columna
+// (`ingredientes.nombre` VARCHAR(150), igualada en 2026-09-15_saneo_esquema.sql).
+// Aceptar 255 aquí solo movía el fallo a MySQL, que lo devolvía como un 500
+// ilegible en lugar de un 400 que dice qué campo sobra.
 const crear = z.object({
-  nombre: z.string({ error: 'nombre es obligatorio' }).trim().min(1, 'nombre es obligatorio').max(255),
+  nombre: texto('nombre', 150),
   costo_unitario: z.coerce.number().min(0).optional(),
   es_alergeno: booleano,
   stock_actual: z.coerce.number().min(0).optional(),
@@ -9,7 +13,7 @@ const crear = z.object({
 });
 
 const actualizar = z.object({
-  nombre: texto('nombre').optional(),
+  nombre: texto('nombre', 150).optional(),
   costo_unitario: z.coerce.number().min(0).optional(),
   es_alergeno: booleano,
   stock_actual: z.coerce.number().min(0).optional(),

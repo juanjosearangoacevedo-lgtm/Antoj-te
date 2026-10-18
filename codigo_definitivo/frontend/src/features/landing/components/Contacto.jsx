@@ -4,7 +4,7 @@ import { Btn, Field, Input, Select, Textarea, ErrorMsg } from '@/shared/componen
 import { enviarSolicitud } from '@/features/landing/services/solicitudesApi';
 import { usePlanes } from '@/features/landing/hooks/usePlanes';
 import { WHATSAPP_URL, WHATSAPP_VISIBLE } from '@/features/landing/contenido/contacto';
-import MascotaBitemo from './marca/MascotaBitemo';
+import MascotaAntojate from '@/shared/components/marca/MascotaAntojate';
 
 const FORM_VACIO = {
   restaurante_nombre: '',
@@ -102,7 +102,7 @@ export default function Contacto({ planPreseleccionado }) {
               </span>
             </a>
 
-            <MascotaBitemo expresion="feliz" className="mx-auto lg:mx-0 mt-10 hidden lg:block w-36" />
+            <MascotaAntojate expresion="feliz" className="mx-auto lg:mx-0 mt-10 hidden lg:block w-36" />
           </div>
 
           {enviado ? (
@@ -274,7 +274,7 @@ export default function Contacto({ planPreseleccionado }) {
               <p className="text-[11px] text-muted text-center mt-4 leading-relaxed">
                 {creaCuenta
                   ? 'Revisamos cada solicitud a mano antes de activar la cuenta. Te avisamos en cuanto esté lista.'
-                  : 'Usamos estos datos únicamente para contactarte sobre Bitemo.'}
+                  : 'Usamos estos datos únicamente para contactarte sobre Antojate.'}
               </p>
             </form>
           )}

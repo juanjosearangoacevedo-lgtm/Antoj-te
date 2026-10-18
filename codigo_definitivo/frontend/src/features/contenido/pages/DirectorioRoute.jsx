@@ -44,7 +44,7 @@ export default function DirectorioRoute() {
   const nombreCiudad = datos?.ciudad?.nombre;
   const titulo = nombreCiudad
     ? `Restaurantes con menú digital en ${nombreCiudad}`
-    : 'Restaurantes con menú digital en Bitemo';
+    : 'Restaurantes con menú digital en Antojate';
 
   const migas = [
     { nombre: 'Inicio', ruta: '/' },

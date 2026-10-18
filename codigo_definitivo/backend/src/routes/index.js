@@ -20,6 +20,10 @@ router.use('/temas', require('./temas.routes'));
 router.use('/plataforma', require('./plataforma.routes'));
 router.use('/solicitudes', require('./solicitudes.routes'));
 router.use('/pagos', require('./pagos.routes'));
+// Moderación de los comentarios que dejan en la app sobre los platos.
+router.use('/comentarios', require('./comentarios.routes'));
 router.use('/public', require('./public.routes'));
+// La app móvil del comensal: su propia identidad y su propio contrato (ver app/index.js).
+router.use('/app/v1', require('./app'));
 
 module.exports = router;

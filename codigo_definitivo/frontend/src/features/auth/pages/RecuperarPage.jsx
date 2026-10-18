@@ -18,7 +18,7 @@ export default function RecuperarPage() {
   const [enviando, setEnviando] = useState(false);
   const [enviado, setEnviado] = useState(false);
 
-  useTituloPagina('Recuperar contraseña · Bitemo');
+  useTituloPagina('Recuperar contraseña · Antojate');
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -48,7 +48,7 @@ export default function RecuperarPage() {
             <MailCheck className="text-ok" size={20} />
           </div>
           <p className="text-sm text-cream">
-            Si <span className="font-semibold break-all">{email}</span> tiene una cuenta en Bitemo, te
+            Si <span className="font-semibold break-all">{email}</span> tiene una cuenta en Antojate, te
             enviamos un enlace para elegir una contraseña nueva.
           </p>
           <p className="text-xs text-muted mt-3">

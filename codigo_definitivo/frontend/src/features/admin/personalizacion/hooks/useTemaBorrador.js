@@ -39,7 +39,7 @@ export function useTemaBorrador() {
     setConfirmacion(false);
   }, [guardado]);
 
-  // Deja en blanco toda la personalización: el menú vuelve al diseño de Bitemo.
+  // Deja en blanco toda la personalización: el menú vuelve al diseño de Antojate.
   const restablecerTodo = useCallback(() => {
     setConfirmacion(false);
     setBorrador((t) => ({ ...t, ...Object.fromEntries(CLAVES_TEMA.map((c) => [c, null])) }));

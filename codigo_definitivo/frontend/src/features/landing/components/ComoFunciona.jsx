@@ -1,5 +1,5 @@
 import { QrCode, Clapperboard, ShoppingBag } from 'lucide-react';
-import MascotaBitemo from './marca/MascotaBitemo';
+import MascotaAntojate from '@/shared/components/marca/MascotaAntojate';
 import { COMO_FUNCIONA } from '@/features/landing/contenido/landing';
 
 // Los textos viven en contenido/landing.js porque el build también los escribe
@@ -13,7 +13,7 @@ export default function ComoFunciona() {
     <section id="como-funciona" className="border-t border-line bg-surface">
       <div className="max-w-6xl mx-auto px-5 py-16 md:py-20">
         <div className="flex flex-col items-center gap-3 mb-12 text-center">
-          <MascotaBitemo expresion="curioso" className="w-20 sm:w-24" />
+          <MascotaAntojate expresion="curioso" className="w-20 sm:w-24" />
           <h2 className="font-display text-3xl md:text-4xl font-bold tracking-[-0.02em] text-cream text-balance">
             {COMO_FUNCIONA.h2}
           </h2>

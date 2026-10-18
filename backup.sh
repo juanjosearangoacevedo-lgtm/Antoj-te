@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Backup diario de la base de datos MySQL de Bitemo.
+# Backup diario de la base de datos MySQL de Antojate.
 # Programar en cron (VPS):   0 3 * * *  /ruta/al/proyecto/backup.sh >> /var/log/bitemo-backup.log 2>&1
 set -euo pipefail
 

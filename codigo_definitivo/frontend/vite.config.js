@@ -58,7 +58,7 @@ const grafoPortada = (sitio) =>
       url: `${sitio}/`,
       name: 'Menú digital con QR y video para restaurantes',
       description:
-        'Bitemo convierte la carta de un restaurante en un menú digital con código QR donde cada plato se ve en video y el comensal pide desde la mesa.',
+        'Antojate convierte la carta de un restaurante en un menú digital con código QR donde cada plato se ve en video y el comensal pide desde la mesa.',
       inLanguage: 'es',
       isPartOf: { '@id': idSitio(sitio) },
       about: { '@id': idOrganizacion(sitio) },
@@ -72,12 +72,12 @@ const grafoPagina = (sitio, p) => {
   const camino =
     p.coleccion === 'guia'
       ? [
-          { nombre: 'Bitemo', ruta: '/' },
+          { nombre: 'Antojate', ruta: '/' },
           { nombre: 'Guías', ruta: '/guias' },
           { nombre: p.h1, ruta: p.ruta },
         ]
       : [
-          { nombre: 'Bitemo', ruta: '/' },
+          { nombre: 'Antojate', ruta: '/' },
           { nombre: p.h1, ruta: p.ruta },
         ];
 
@@ -213,7 +213,7 @@ function seoEstatico(sitio) {
           'app.html',
           escribirPagina(plantilla, {
             sitio,
-            titulo: 'Bitemo',
+            titulo: 'Antojate',
             descripcion: 'Menú digital con QR y video para restaurantes.',
             canonical: null,
             robots: 'noindex, nofollow',
@@ -230,7 +230,7 @@ function seoEstatico(sitio) {
           '404.html',
           escribirPagina(plantilla, {
             sitio,
-            titulo: 'Página no encontrada | Bitemo',
+            titulo: 'Página no encontrada | Antojate',
             descripcion:
               'La página que buscas no existe o cambió de dirección. Desde aquí puedes volver a la portada, a las guías o al directorio de restaurantes.',
             // Sin canonical y con noindex: una página de error no es una
@@ -242,9 +242,9 @@ function seoEstatico(sitio) {
             cuerpo: `<main><h1>Esta página no existe</h1>
               <p>Puede que el enlace esté mal escrito o que la página haya cambiado de dirección.</p>
               <ul>
-                <li><a href="${url('/')}">Portada de Bitemo</a></li>
+                <li><a href="${url('/')}">Portada de Antojate</a></li>
                 <li><a href="${url('/guias')}">Guías para restaurantes</a></li>
-                <li><a href="${url('/restaurantes')}">Restaurantes en Bitemo</a></li>
+                <li><a href="${url('/restaurantes')}">Restaurantes en Antojate</a></li>
               </ul></main>`,
           })
         );
@@ -255,7 +255,7 @@ function seoEstatico(sitio) {
           'guias.html',
           escribirPagina(plantilla, {
             sitio,
-            titulo: 'Guías de menú digital para restaurantes | Bitemo',
+            titulo: 'Guías de menú digital para restaurantes | Antojate',
             descripcion:
               'Guías prácticas para montar el menú digital de un restaurante: qué formatos existen, cómo crearlo, cómo grabar los platos y qué cambia frente a la carta impresa.',
             canonical: url('/guias'),
@@ -275,7 +275,7 @@ function seoEstatico(sitio) {
                 })),
               },
               migas(sitio, [
-                { nombre: 'Bitemo', ruta: '/' },
+                { nombre: 'Antojate', ruta: '/' },
                 { nombre: 'Guías', ruta: '/guias' },
               ]),
             ]),

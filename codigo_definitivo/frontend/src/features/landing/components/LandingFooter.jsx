@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { BitemoLogo } from './marca/BitemoLogo';
+import { LogoAntojate } from '@/shared/components/marca/LogoAntojate';
 import { WHATSAPP_URL } from '@/features/landing/contenido/contacto';
 import { DEMO_LINK_PROPS } from '@/features/landing/contenido/demo';
 import { ENLACES_CONTENIDO } from '@/features/landing/contenido/landing';
@@ -8,13 +8,12 @@ export default function LandingFooter() {
   return (
     <footer className="border-t border-line bg-surface">
       <div className="max-w-6xl mx-auto px-5 py-10 flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
-        {/* Aquí sí cabe explicar el nombre: la nav solo alcanza para insinuarlo. */}
+        {/* Aquí sí cabe explicar la marca: la nav solo alcanza para el nombre. */}
         <div className="text-center md:text-left">
-          <BitemoLogo size="md" leyenda="tagline" />
+          <LogoAntojate size="md" leyenda="tagline" />
           <p className="text-sm text-muted mt-4 max-w-sm mx-auto md:mx-0 leading-relaxed">
-            De <strong className="font-semibold text-cream">bite</strong> (bocado) y{' '}
-            <strong className="font-semibold text-cream">motion</strong> (movimiento): el bocado en movimiento. Marca,
-            video y ventas para restaurantes latinoamericanos.
+            <strong className="font-semibold text-cream">Antojate</strong> convierte la carta de tu restaurante en
+            videos cortos de tus platos. Tus clientes los ven desde la mesa y piden con antojo.
           </p>
         </div>
 
@@ -67,7 +66,7 @@ export default function LandingFooter() {
 
       <div className="border-t border-line">
         <p className="max-w-6xl mx-auto px-5 py-5 text-xs text-muted text-center md:text-left">
-          © {new Date().getFullYear()} Bitemo · Descubre antes de pedir.
+          © {new Date().getFullYear()} Antojate · Descubre antes de pedir.
         </p>
       </div>
     </footer>

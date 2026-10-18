@@ -1,7 +1,7 @@
 import { QrCode, Play, Heart, Info, Share2, ShoppingBag, Clapperboard, BarChart3 } from 'lucide-react';
 import { Btn } from '@/shared/components/ui';
-import { BitemoIsotipo } from './marca/BitemoLogo';
-import MascotaBitemo from './marca/MascotaBitemo';
+import { IsotipoAntojate } from '@/shared/components/marca/LogoAntojate';
+import MascotaAntojate from '@/shared/components/marca/MascotaAntojate';
 import { DEMO_LINK_PROPS, VIDEO_DEMO } from '@/features/landing/contenido/demo';
 import { HERO } from '@/features/landing/contenido/landing';
 
@@ -88,13 +88,13 @@ export default function Hero() {
                   loop
                   playsInline
                   preload="metadata"
-                  aria-label="Demostración del menú digital de Bitemo en un teléfono"
+                  aria-label="Demostración del menú digital de Antojate en un teléfono"
                 />
               ) : (
               <div className="absolute inset-0 flex flex-col">
                 <div className="flex items-center justify-between px-4 pt-9 pb-3">
                   <span className="inline-flex items-center gap-2">
-                    <BitemoIsotipo size={20} />
+                    <IsotipoAntojate size={20} lineas={false} />
                     <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/60">Mesa 8</span>
                   </span>
                   <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-2.5 py-1 text-[10px] font-semibold text-white/80">
@@ -139,7 +139,7 @@ export default function Hero() {
             </div>
           </div>
 
-          <MascotaBitemo
+          <MascotaAntojate
             expresion="recomendando"
             className="mascota-flotante pointer-events-none absolute -bottom-10 -left-6 w-28 sm:-left-14 sm:w-36 lg:-bottom-12 lg:-left-20 lg:w-44"
           />

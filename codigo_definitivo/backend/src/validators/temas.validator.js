@@ -1,10 +1,10 @@
 const { z, textoOpcional, url } = require('./comunes');
 
-// Un color hexadecimal, o vacío/null cuando se hereda el default de Bitemo.
+// Un color hexadecimal, o vacío/null cuando se hereda el default de Antojate.
 const color = z
   .string()
   .trim()
-  .regex(/^$|^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/, 'El color debe ser hexadecimal, por ejemplo #FF7A00')
+  .regex(/^$|^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/, 'El color debe ser hexadecimal, por ejemplo #1F8A5B')
   .optional()
   .nullable();
 

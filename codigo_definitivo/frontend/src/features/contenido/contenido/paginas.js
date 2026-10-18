@@ -1,7 +1,7 @@
 // Contenido de las páginas públicas de contenido (guías y páginas de producto).
 //
 // ESTE ARCHIVO ES LA ÚNICA FUENTE, Y LO LEEN DOS CONSUMIDORES:
-//   · los componentes de React, que lo pintan con el diseño de Bitemo;
+//   · los componentes de React, que lo pintan con el diseño de Antojate;
 //   · seo/contenido-html.js, que en el BUILD escribe cada página como HTML
 //     estático en dist/, porque los rastreadores de los buscadores con IA no
 //     ejecutan JavaScript y para ellos una SPA está en blanco.
@@ -24,7 +24,7 @@
 //   faq           [{ pregunta, respuesta }] → FAQPage, y responde a la búsqueda
 //   relacionadas  slugs de otras páginas: de aquí sale el enlazado interno
 //
-// REGLA DE CONTENIDO: solo se afirma lo que Bitemo hace HOY. Un texto que
+// REGLA DE CONTENIDO: solo se afirma lo que Antojate hace HOY. Un texto que
 // promete de más se cae en la primera demo, y una guía que miente no se enlaza.
 
 // Fecha de última revisión del contenido. Se toca a mano al editar un texto: es
@@ -41,12 +41,12 @@ export const PAGINAS = [
     slug: 'menu-digital-con-video',
     ruta: '/menu-digital-con-video',
     coleccion: 'producto',
-    titulo: 'Menú digital con video para restaurantes | Bitemo',
+    titulo: 'Menú digital con video para restaurantes | Antojate',
     descripcion:
       'Cómo funciona un menú digital donde cada plato se ve en video: qué gana el restaurante, cómo se graban los videos y qué hace falta para montarlo.',
     h1: 'Menú digital con video: que el comensal vea el plato antes de pedirlo',
     entradilla:
-      'Un menú digital con video sustituye la foto fija de cada plato por un clip vertical de unos segundos. El comensal escanea el QR de su mesa y recorre la carta como recorrería un feed: ve cómo se sirve el plato, de qué tamaño es y qué lleva, y decide mirando en vez de leyendo. Bitemo es la plataforma con la que se monta esa carta.',
+      'Un menú digital con video sustituye la foto fija de cada plato por un clip vertical de unos segundos. El comensal escanea el QR de su mesa y recorre la carta como recorrería un feed: ve cómo se sirve el plato, de qué tamaño es y qué lleva, y decide mirando en vez de leyendo. Antojate es la plataforma con la que se monta esa carta.',
     actualizado: REVISADO,
     secciones: [
       {
@@ -94,7 +94,7 @@ export const PAGINAS = [
         h2: 'Cómo se sirven los videos sin que el menú se quede cargando',
         parrafos: [
           'El problema real de un menú con video no es grabarlo, es entregarlo: un restaurante lleno son decenas de celulares pidiendo video a la vez, muchos con datos móviles y no con el wifi del local.',
-          'En Bitemo los videos no salen del servidor del menú. Se sirven desde una red de distribución de contenido con calidad adaptativa: el reproductor mide la conexión de cada comensal y baja o sube la resolución solo. Con mala señal el video se ve con menos definición, pero se ve; que es la diferencia entre una carta que funciona y una rueda girando.',
+          'En Antojate los videos no salen del servidor del menú. Se sirven desde una red de distribución de contenido con calidad adaptativa: el reproductor mide la conexión de cada comensal y baja o sube la resolución solo. Con mala señal el video se ve con menos definición, pero se ve; que es la diferencia entre una carta que funciona y una rueda girando.',
         ],
       },
     ],
@@ -122,7 +122,7 @@ export const PAGINAS = [
     slug: 'menu-qr-para-restaurantes',
     ruta: '/menu-qr-para-restaurantes',
     coleccion: 'producto',
-    titulo: 'Menú QR para restaurantes: cómo crearlo | Bitemo',
+    titulo: 'Menú QR para restaurantes: cómo crearlo | Antojate',
     descripcion:
       'Qué es un menú con código QR, en qué cambia tener un QR por mesa y no uno por local, y qué errores hacen que el comensal no llegue a escanearlo.',
     h1: 'Menú QR para restaurantes',
@@ -135,7 +135,7 @@ export const PAGINAS = [
         parrafos: [
           'Es la decisión que más consecuencias tiene y casi nadie la toma a conciencia. Un código único para todo el restaurante es más fácil de imprimir: el mismo adhesivo sirve en todas las mesas. Pero ese código solo sabe abrir la carta.',
           'Un código por mesa lleva dentro la identidad de la mesa. Eso es lo que permite que el comensal pida desde su celular y que la comanda entre a cocina con el número de mesa puesto, sin que nadie lo teclee. Sin esa información, un menú QR se queda en carta de solo mirar y el pedido sigue pasando por el mesero.',
-          'Bitemo genera un código por mesa desde el panel, precisamente para que el pedido pueda cerrarse. Si un código se filtra o el adhesivo se daña, se regenera y el anterior deja de servir de inmediato.',
+          'Antojate genera un código por mesa desde el panel, precisamente para que el pedido pueda cerrarse. Si un código se filtra o el adhesivo se daña, se regenera y el anterior deja de servir de inmediato.',
         ],
       },
       {
@@ -564,7 +564,7 @@ export const PAGINAS = [
         parrafos: [
           'La comparación útil no es "cuota mensual contra cero", sino cuota mensual contra lo que cuesta mantener la carta impresa al día durante un año. En esa cuenta entran la impresión, el diseño de cada versión nueva, las cartas que se manchan o se pierden, y las que quedan inservibles cada vez que sube un precio.',
           'Un restaurante que reajusta precios dos o tres veces al año y tiene entre veinte y cuarenta cartas en circulación suele descubrir que ya estaba gastando el equivalente a varias mensualidades solo en reimpresiones, sin contar el tiempo del administrador.',
-          'Los planes de Bitemo se facturan en pesos colombianos y con pago anual equivalen a diez mensualidades. En la página principal está el precio vigente de cada uno: se leen de la base de datos, así que lo que aparece ahí es lo que se cobra.',
+          'Los planes de Antojate se facturan en pesos colombianos y con pago anual equivalen a diez mensualidades. En la página principal está el precio vigente de cada uno: se leen de la base de datos, así que lo que aparece ahí es lo que se cobra.',
         ],
       },
       {
@@ -581,7 +581,7 @@ export const PAGINAS = [
         h2: 'Por qué el menú también es un canal de captación',
         parrafos: [
           'En Colombia, buena parte de la decisión de a dónde ir a comer pasa por Instagram y por buscar el nombre del restaurante en Google. Un menú digital con dirección web propia funciona en los dos sitios: se comparte como enlace en el perfil y puede aparecer cuando alguien busca el restaurante por su nombre.',
-          'Esa es la diferencia entre un menú que solo sirve dentro del local y uno que también trabaja fuera. En Bitemo cada restaurante tiene una carta pública en su propia dirección, pensada para compartirse y para ser encontrada, aparte del menú con pedido que se abre desde el QR de la mesa.',
+          'Esa es la diferencia entre un menú que solo sirve dentro del local y uno que también trabaja fuera. En Antojate cada restaurante tiene una carta pública en su propia dirección, pensada para compartirse y para ser encontrada, aparte del menú con pedido que se abre desde el QR de la mesa.',
         ],
       },
     ],
@@ -589,7 +589,7 @@ export const PAGINAS = [
       {
         pregunta: '¿Cuánto cuesta un menú digital para un restaurante en Colombia?',
         respuesta:
-          'Depende de si es solo carta o incluye pedido desde la mesa y panel de cocina. Bitemo tiene tres planes en pesos colombianos, desde el que publica la carta con video hasta el que suma personalización de marca, carrito y pantalla de cocina; el precio vigente de cada uno está en la página principal.',
+          'Depende de si es solo carta o incluye pedido desde la mesa y panel de cocina. Antojate tiene tres planes en pesos colombianos, desde el que publica la carta con video hasta el que suma personalización de marca, carrito y pantalla de cocina; el precio vigente de cada uno está en la página principal.',
       },
       {
         pregunta: '¿Funciona si el restaurante no tiene buen wifi?',

@@ -4,14 +4,12 @@ import ReactDOM from 'react-dom/client';
 import App from '@/app/App';
 import { aplicarTemaStaffGuardado } from '@/shared/hooks/useTemaStaff';
 
-// Tipografías autoalojadas. Geist es la del panel y el menú; Poppins y Nunito
-// son las de marca de la landing (LandingPage.css las asigna). De Poppins solo
-// entran los dos grosores que usa el manual: cada peso extra son ~15 KB que
-// nadie llega a ver.
-import '@fontsource-variable/geist';
-import '@fontsource-variable/nunito';
-import '@fontsource/poppins/600.css';
-import '@fontsource/poppins/700.css';
+// Tipografías autoalojadas de Antojate: Baloo 2 en titulares y Nunito Sans en
+// textos, para la landing, el panel y el menú. Del Baloo solo entran los dos
+// pesos que se usan: cada peso extra son KB que nadie llega a ver.
+import '@fontsource/baloo-2/600.css';
+import '@fontsource/baloo-2/800.css';
+import '@fontsource-variable/nunito-sans';
 import '@/index.css';
 
 // Antes del primer render, para que el panel no parpadee al cargar.

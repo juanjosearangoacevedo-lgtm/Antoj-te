@@ -1,12 +1,12 @@
 /**
- * Siembra los tres planes comerciales de Bitemo y sus feature flags.
+ * Siembra los tres planes comerciales de Antojate y sus feature flags.
  * Uso: npm run seed:planes
  * Es idempotente: puede correrse varias veces sin duplicar datos.
  */
 require('dotenv').config();
 const pool = require('../src/config/db');
 
-// Los precios están en pesos colombianos (COP), sin decimales: Bitemo factura
+// Los precios están en pesos colombianos (COP), sin decimales: Antojate factura
 // sus suscripciones en Colombia. No confundir con la moneda del menú, que la
 // elige cada restaurante (restaurantes.moneda) y solo afecta a sus platos.
 // `features` son interruptores TÉCNICOS que lee `requireFeature` para dejar pasar

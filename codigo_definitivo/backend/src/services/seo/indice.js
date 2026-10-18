@@ -66,7 +66,7 @@ async function llmsTxt(paginas = []) {
   const seccion = (titulo, filas) => (filas.length ? ['', `## ${titulo}`, '', ...filas] : []);
 
   return [
-    '# Bitemo',
+    '# Antojate',
     '',
     '> Plataforma colombiana de menú digital con código QR para restaurantes: cada plato',
     '> se presenta en video vertical y el comensal pide desde su mesa, sin descargar',
